@@ -9,9 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QWidget
 
 
-class Ui_menu_create_account(object):
+class Ui_menu_create_account(QWidget):
     def setupUi(self, menu_create_account):
         menu_create_account.setObjectName("menu_create_account")
         menu_create_account.setEnabled(True)
@@ -119,6 +120,8 @@ class Ui_menu_create_account(object):
 
         self.retranslateUi(menu_create_account)
         QtCore.QMetaObject.connectSlotsByName(menu_create_account)
+
+        self.btn_cancel.clicked.connect(lambda: menu_create_account.close())
 
     def retranslateUi(self, menu_create_account):
         _translate = QtCore.QCoreApplication.translate
