@@ -147,10 +147,10 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addLayout(self.verticalLayout_4, 0, 0, 1, 1)
         self.verticalLayout_2.addWidget(self.frame)
 
-        # self.title.setText(title)
-        # self.desription.setText(description)
-        # self.balancecurrency.setText(str(balance) + currency)
-        # self.btn_more_info.setText("...")
+        self.title.setText(acc_object._title)
+        self.desription.setText(acc_object._description)
+        self.balancecurrency.setText(f'{acc_object._balance} {acc_object._currency_short}')
+        self.btn_more_info.setText("...")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
