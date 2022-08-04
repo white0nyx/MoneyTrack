@@ -1,35 +1,4 @@
 {
-    "accounts": [
-        {
-            "id": 1,
-            "title": "Тинькофф",
-            "type": "Обычный",
-            "currency_full": "Российский рубль ₽",
-            "currency_short": "₽",
-            "description": "Первый",
-            "balance": "1000",
-            "add_to_all_balance": true
-        },
-        {
-            "id": 2,
-            "title": "Сбербанк",
-            "type": "Обычный",
-            "currency_full": "Российский рубль ₽",
-            "currency_short": "₽",
-            "description": "Второй",
-            "balance": "500",
-            "add_to_all_balance": true
-        },
-        {
-            "id": 3,
-            "title": "Сберегательный счёт",
-            "type": "Накопительный",
-            "currency_full": "Российский рубль ₽",
-            "currency_short": "₽",
-            "description": "На машину",
-            "balance": "500000",
-            "add_to_all_balance": false
-        }
-    ],
-    "new_id": 4
+    "accounts": [],
+    "new_id": 1
 }

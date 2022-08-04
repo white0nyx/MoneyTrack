@@ -9,7 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import json
+from acc_object import Ui_Form
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -112,45 +113,103 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tab_main_menu.setCurrentIndex(0)
+
+        self.add_all_accs_to_gui()
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def add_new_account(self, acc_object):
-        self.frame = QtWidgets.QFrame(self.frame_panel_accs)
-        self.frame.setEnabled(True)
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.gridLayout_4 = QtWidgets.QGridLayout(self.frame)
-        self.gridLayout_4.setContentsMargins(0, 0, 0, -1)
-        self.gridLayout_4.setObjectName("gridLayout_4")
-        self.verticalLayout_4 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.title = QtWidgets.QLabel(self.frame)
-        self.title.setObjectName("title")
-        self.horizontalLayout_2.addWidget(self.title)
-        self.desription = QtWidgets.QLabel(self.frame)
-        self.desription.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
-        self.desription.setObjectName("desription")
-        self.horizontalLayout_2.addWidget(self.desription)
-        self.verticalLayout_4.addLayout(self.horizontalLayout_2)
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.balancecurrency = QtWidgets.QLabel(self.frame)
-        self.balancecurrency.setObjectName("balancecurrency")
-        self.horizontalLayout.addWidget(self.balancecurrency)
-        self.btn_more_info = QtWidgets.QToolButton(self.frame)
-        self.btn_more_info.setObjectName("btn_more_info")
-        self.horizontalLayout.addWidget(self.btn_more_info)
-        self.verticalLayout_4.addLayout(self.horizontalLayout)
-        self.gridLayout_4.addLayout(self.verticalLayout_4, 0, 0, 1, 1)
-        self.verticalLayout_2.addWidget(self.frame)
 
-        self.title.setText(acc_object._title)
-        self.desription.setText(acc_object._description)
-        self.balancecurrency.setText(f'{acc_object._balance} {acc_object._currency_short}')
-        self.btn_more_info.setText("...")
+        if acc_object._type == 'Обычный':
+            print(1)
+            self.frame1 = QtWidgets.QFrame(self.frame_panel_accs)
+            self.frame1.setEnabled(True)
+            self.frame1.setFrameShape(QtWidgets.QFrame.StyledPanel)
+            self.frame1.setFrameShadow(QtWidgets.QFrame.Raised)
+            self.frame1.setObjectName("frame11")
+            self.gridLayout1 = QtWidgets.QGridLayout(self.frame1)
+            self.gridLayout1.setContentsMargins(0, 0, 0, -1)
+            self.gridLayout1.setObjectName("gridLayout1")
+            self.verticalLayout1 = QtWidgets.QVBoxLayout()
+            self.verticalLayout1.setObjectName("verticalLayout1")
+            self.horizontalLayout1 = QtWidgets.QHBoxLayout()
+            self.horizontalLayout1.setObjectName("horizontalLayout1")
+            self.title1 = QtWidgets.QLabel(self.frame1)
+            self.title1.setObjectName("title1")
+            self.horizontalLayout1.addWidget(self.title1)
+            self.desription1 = QtWidgets.QLabel(self.frame1)
+            self.desription1.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+            self.desription1.setObjectName("desription")
+            self.horizontalLayout1.addWidget(self.desription1)
+            self.verticalLayout1.addLayout(self.horizontalLayout1)
+            self.horizontalLayout1 = QtWidgets.QHBoxLayout()
+            self.horizontalLayout1.setObjectName("horizontalLayout1")
+            self.balancecurrency1 = QtWidgets.QLabel(self.frame1)
+            self.balancecurrency1.setObjectName("balancecurrency1")
+            self.horizontalLayout1.addWidget(self.balancecurrency1)
+            self.btn_more_info1 = QtWidgets.QToolButton(self.frame1)
+            self.btn_more_info1.setObjectName("btn_more_info1")
+            self.horizontalLayout1.addWidget(self.btn_more_info1)
+            self.verticalLayout1.addLayout(self.horizontalLayout1)
+            self.gridLayout1.addLayout(self.verticalLayout1, 0, 0, 1, 1)
+            self.verticalLayout_2.addWidget(self.frame1)
+
+            self.title1.setText(acc_object._title)
+            self.desription1.setText(acc_object._description)
+            self.balancecurrency1.setText(f'{acc_object._balance} {acc_object._currency_short}')
+            self.btn_more_info1.setText("...")
+
+        elif acc_object._type == 'Накопительный':
+            print(2)
+            self.frame2 = QtWidgets.QFrame(self.frame_panel_savings)
+            self.frame2.setEnabled(True)
+            self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+            self.frame2.setFrameShadow(QtWidgets.QFrame.Raised)
+            self.frame2.setObjectName("frame_3")
+            self.gridLayout2 = QtWidgets.QGridLayout(self.frame2)
+            self.gridLayout2.setContentsMargins(0, 0, 0, -1)
+            self.gridLayout2.setObjectName("gridLayout2")
+            self.verticalLayout2 = QtWidgets.QVBoxLayout()
+            self.verticalLayout2.setObjectName("verticalLayout2")
+            self.horizontalLayout2 = QtWidgets.QHBoxLayout()
+            self.horizontalLayout2.setObjectName("horizontalLayout2")
+            self.title2 = QtWidgets.QLabel(self.frame2)
+            self.title2.setObjectName("title2")
+            self.horizontalLayout2.addWidget(self.title2)
+            self.desription2 = QtWidgets.QLabel(self.frame2)
+            self.desription2.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+            self.desription2.setObjectName("desription_3")
+            self.horizontalLayout2.addWidget(self.desription2)
+            self.verticalLayout2.addLayout(self.horizontalLayout2)
+            self.horizontalLayout2 = QtWidgets.QHBoxLayout()
+            self.horizontalLayout2.setObjectName("horizontalLayout2")
+            self.balancecurrency2 = QtWidgets.QLabel(self.frame2)
+            self.balancecurrency2.setObjectName("balancecurrency2")
+            self.horizontalLayout2.addWidget(self.balancecurrency2)
+            self.btn_more_info2 = QtWidgets.QToolButton(self.frame2)
+            self.btn_more_info2.setObjectName("btn_more_info_3")
+            self.horizontalLayout2.addWidget(self.btn_more_info2)
+            self.verticalLayout2.addLayout(self.horizontalLayout2)
+            self.gridLayout2.addLayout(self.verticalLayout2, 0, 0, 1, 1)
+            self.verticalLayout.addWidget(self.frame2)
+
+            self.title2.setText(acc_object._title)
+            self.desription2.setText(acc_object._description)
+            self.balancecurrency2.setText(f'{acc_object._balance} {acc_object._currency_short}')
+            self.btn_more_info2.setText("...")
+
+
+
+
+    def add_all_accs_to_gui(self):
+
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accounts_data = json.load(file)
+
+        for acc in accounts_data['accounts']:
+            acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
+                              acc['description'], acc['balance'], acc['add_to_all_balance'])
+            self.add_new_account(acc_obj)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
