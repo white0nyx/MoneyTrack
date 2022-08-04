@@ -12,8 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QWidget
 
 
-class Ui_menu_create_account(QWidget):
+class Ui_menu_create_account(object):
     def setupUi(self, menu_create_account):
+        self.menu_create_account = menu_create_account
         menu_create_account.setObjectName("menu_create_account")
         menu_create_account.setEnabled(True)
         menu_create_account.resize(424, 264)
@@ -38,12 +39,12 @@ class Ui_menu_create_account(QWidget):
         self.verticalLayout.addWidget(self.menu_title_account)
         self.formLayout = QtWidgets.QFormLayout()
         self.formLayout.setObjectName("formLayout")
-        self.label = QtWidgets.QLabel(menu_create_account)
-        self.label.setObjectName("label")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label)
-        self.lineEdit = QtWidgets.QLineEdit(menu_create_account)
-        self.lineEdit.setObjectName("lineEdit")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit)
+        self.label_title = QtWidgets.QLabel(menu_create_account)
+        self.label_title.setObjectName("label")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_title)
+        self.line_title = QtWidgets.QLineEdit(menu_create_account)
+        self.line_title.setObjectName("lineEdit")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.line_title)
         self.label_type = QtWidgets.QLabel(menu_create_account)
         self.label_type.setObjectName("label_type")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_type)
@@ -87,9 +88,9 @@ class Ui_menu_create_account(QWidget):
         self.remains_layout = QtWidgets.QLabel(menu_create_account)
         self.remains_layout.setObjectName("remains_layout")
         self.remains.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.remains_layout)
-        self.remains_line = QtWidgets.QLineEdit(menu_create_account)
-        self.remains_line.setObjectName("remains_line")
-        self.remains.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.remains_line)
+        self.line_balance = QtWidgets.QLineEdit(menu_create_account)
+        self.line_balance.setObjectName("remains_line")
+        self.remains.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.line_balance)
         self.remains_and_all_balance.addLayout(self.remains)
         self.add_in_all_balance_menu = QtWidgets.QHBoxLayout()
         self.add_in_all_balance_menu.setObjectName("add_in_all_balance_menu")
@@ -122,12 +123,24 @@ class Ui_menu_create_account(QWidget):
         QtCore.QMetaObject.connectSlotsByName(menu_create_account)
 
         self.btn_cancel.clicked.connect(lambda: menu_create_account.close())
+        self.btn_add.clicked.connect(lambda: self.get_data_acc())
+
+    def get_data_acc(self):
+        acc_title = self.line_title.text()
+        acc_type = self.type_selection.currentText()
+        acc_currency_full = self.currency_selection.currentText()
+        acc_currency_short = acc_currency_full.split()[-1]
+        acc_description = self.line_description.text()
+        acc_balance = self.line_balance.text()
+        acc_balance_add_in_all_balance = self.r_btn_check_in_all_balance.isChecked()
+        print(acc_title, acc_type, acc_currency_full, acc_currency_short, acc_description, acc_balance, acc_balance_add_in_all_balance)
+        self.menu_create_account.close()
 
     def retranslateUi(self, menu_create_account):
         _translate = QtCore.QCoreApplication.translate
         menu_create_account.setWindowTitle(_translate("menu_create_account", "Новый счёт"))
         self.menu_title_account.setText(_translate("menu_create_account", "Счёт"))
-        self.label.setText(_translate("menu_create_account", "Название"))
+        self.label_title.setText(_translate("menu_create_account", "Название"))
         self.label_type.setText(_translate("menu_create_account", "Тип"))
         self.type_selection.setItemText(0, _translate("menu_create_account", "Обычный"))
         self.type_selection.setItemText(1, _translate("menu_create_account", "Накопительный"))

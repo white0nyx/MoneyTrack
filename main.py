@@ -20,6 +20,8 @@ def openWindowCrtNewAcc():
     menu_create_account.show()
 
 
+
+
 ui.btn_crt_new_acc.clicked.connect(openWindowCrtNewAcc)
 
 sys.exit(app.exec_())
