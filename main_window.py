@@ -114,6 +114,44 @@ class Ui_MainWindow(object):
         self.tab_main_menu.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def add_new_account(self, acc_object):
+        self.frame = QtWidgets.QFrame(self.frame_panel_accs)
+        self.frame.setEnabled(True)
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.frame)
+        self.gridLayout_4.setContentsMargins(0, 0, 0, -1)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.title = QtWidgets.QLabel(self.frame)
+        self.title.setObjectName("title")
+        self.horizontalLayout_2.addWidget(self.title)
+        self.desription = QtWidgets.QLabel(self.frame)
+        self.desription.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.desription.setObjectName("desription")
+        self.horizontalLayout_2.addWidget(self.desription)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_2)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.balancecurrency = QtWidgets.QLabel(self.frame)
+        self.balancecurrency.setObjectName("balancecurrency")
+        self.horizontalLayout.addWidget(self.balancecurrency)
+        self.btn_more_info = QtWidgets.QToolButton(self.frame)
+        self.btn_more_info.setObjectName("btn_more_info")
+        self.horizontalLayout.addWidget(self.btn_more_info)
+        self.verticalLayout_4.addLayout(self.horizontalLayout)
+        self.gridLayout_4.addLayout(self.verticalLayout_4, 0, 0, 1, 1)
+        self.verticalLayout_2.addWidget(self.frame)
+
+        # self.title.setText(title)
+        # self.desription.setText(description)
+        # self.balancecurrency.setText(str(balance) + currency)
+        # self.btn_more_info.setText("...")
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MoneyTrack"))
@@ -128,6 +166,7 @@ class Ui_MainWindow(object):
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_categories), _translate("MainWindow", "Категории"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_operations), _translate("MainWindow", "Операции"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_overview), _translate("MainWindow", "Обзор"))
+
 
 
 if __name__ == "__main__":

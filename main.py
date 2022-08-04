@@ -2,6 +2,15 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from main_window import Ui_MainWindow
 from menu_crt_new_acc import Ui_menu_create_account
+from acc_object import Ui_Form
+
+import os.path
+import json
+
+if not os.path.exists('app_data/all_accounts.json'):
+    with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
+        json.dump([], file, indent=4, ensure_ascii=False)
+
 
 app = QtWidgets.QApplication(sys.argv)
 app.setStyle('Fusion')

@@ -1,0 +1,11 @@
+[
+    {
+        "title": "Tinkoff Black",
+        "type": "Обычный",
+        "currency_full": "Российский рубль ₽",
+        "currency_short": "₽",
+        "description": "Мой основной счёт",
+        "balance": "",
+        "add_to_all_balance": false
+    }
+]

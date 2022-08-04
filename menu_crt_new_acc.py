@@ -11,6 +11,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QWidget
 
+import json
+
 
 class Ui_menu_create_account(object):
     def setupUi(self, menu_create_account):
@@ -126,14 +128,26 @@ class Ui_menu_create_account(object):
         self.btn_add.clicked.connect(lambda: self.get_data_acc())
 
     def get_data_acc(self):
-        acc_title = self.line_title.text()
-        acc_type = self.type_selection.currentText()
-        acc_currency_full = self.currency_selection.currentText()
-        acc_currency_short = acc_currency_full.split()[-1]
-        acc_description = self.line_description.text()
-        acc_balance = self.line_balance.text()
-        acc_balance_add_in_all_balance = self.r_btn_check_in_all_balance.isChecked()
-        print(acc_title, acc_type, acc_currency_full, acc_currency_short, acc_description, acc_balance, acc_balance_add_in_all_balance)
+        print(1)
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accounts_data = json.load(file)
+        print(accounts_data)
+        accounts_data.append(
+            {
+                'title': self.line_title.text(),
+                'type': self.type_selection.currentText(),
+                'currency_full': self.currency_selection.currentText(),
+                'currency_short': self.currency_selection.currentText().split()[-1],
+                'description': self.line_description.text(),
+                'balance': self.line_balance.text(),
+                'add_to_all_balance': self.r_btn_check_in_all_balance.isChecked()
+
+            }
+        )
+
+        with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
+            json.dump(accounts_data, file, indent=4, ensure_ascii=False)
+
         self.menu_create_account.close()
 
     def retranslateUi(self, menu_create_account):
