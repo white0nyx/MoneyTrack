@@ -132,8 +132,9 @@ class Ui_menu_create_account(object):
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
         print(accounts_data)
-        accounts_data.append(
+        accounts_data['accounts'].append(
             {
+                'id': accounts_data['new_id'],
                 'title': self.line_title.text(),
                 'type': self.type_selection.currentText(),
                 'currency_full': self.currency_selection.currentText(),
@@ -144,7 +145,9 @@ class Ui_menu_create_account(object):
 
             }
         )
-
+        print(accounts_data)
+        accounts_data['new_id'] += 1
+        print('ok')
         with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
             json.dump(accounts_data, file, indent=4, ensure_ascii=False)
 
