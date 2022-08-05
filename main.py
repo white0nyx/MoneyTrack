@@ -27,7 +27,7 @@ MainWindow.show()
 def openWindowCrtNewAcc():
     global menu_create_account
     menu_create_account = QtWidgets.QDialog()
-    window_crt_new_acc = Ui_menu_create_account()
+    window_crt_new_acc = Ui_menu_create_account(ui)
     window_crt_new_acc.setupUi(menu_create_account)
     menu_create_account.show()
 

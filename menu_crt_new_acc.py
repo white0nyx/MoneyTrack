@@ -15,6 +15,10 @@ import json
 
 
 class Ui_menu_create_account(object):
+
+    def __init__(self, parent_window):
+        self.parent_window = parent_window
+
     def setupUi(self, menu_create_account):
         self.menu_create_account = menu_create_account
         menu_create_account.setObjectName("menu_create_account")
@@ -128,10 +132,10 @@ class Ui_menu_create_account(object):
         self.btn_add.clicked.connect(lambda: self.get_data_acc())
 
     def get_data_acc(self):
-        print(1)
+
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
-        print(accounts_data)
+
         accounts_data['accounts'].append(
             {
                 'id': accounts_data['new_id'],
@@ -145,11 +149,13 @@ class Ui_menu_create_account(object):
 
             }
         )
-        print(accounts_data)
+
         accounts_data['new_id'] += 1
-        print('ok')
+
         with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
             json.dump(accounts_data, file, indent=4, ensure_ascii=False)
+
+        self.parent_window.add_last_acc()
 
         self.menu_create_account.close()
 

@@ -198,6 +198,12 @@ class Ui_MainWindow(object):
             self.balancecurrency2.setText(f'{acc_object._balance} {acc_object._currency_short}')
             self.btn_more_info2.setText("...")
 
+    def add_last_acc(self):
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            acc = json.load(file)['accounts'][-1]
+            acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
+                              acc['description'], acc['balance'], acc['add_to_all_balance'])
+            self.add_new_account(acc_obj)
 
 
 
