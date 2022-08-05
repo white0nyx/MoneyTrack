@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 from acc_object import Ui_Form
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -58,7 +59,7 @@ class Ui_MainWindow(object):
         self.name_panel_accs.setObjectName("name_panel_accs")
         self.panel_accs.addWidget(self.name_panel_accs)
         self.all_accs_balance = QtWidgets.QLabel(self.frame_panel_accs)
-        self.all_accs_balance.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.all_accs_balance.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.all_accs_balance.setObjectName("all_accs_balance")
         self.panel_accs.addWidget(self.all_accs_balance)
         self.verticalLayout_2.addLayout(self.panel_accs)
@@ -85,7 +86,7 @@ class Ui_MainWindow(object):
         self.name_panel_savings.setObjectName("name_panel_savings")
         self.panel_savings.addWidget(self.name_panel_savings)
         self.all_savings_balance = QtWidgets.QLabel(self.frame_panel_savings)
-        self.all_savings_balance.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.all_savings_balance.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
         self.all_savings_balance.setObjectName("all_savings_balance")
         self.panel_savings.addWidget(self.all_savings_balance)
         self.verticalLayout.addLayout(self.panel_savings)
@@ -121,7 +122,6 @@ class Ui_MainWindow(object):
     def add_new_account(self, acc_object):
 
         if acc_object._type == 'Обычный':
-            print(1)
             self.frame1 = QtWidgets.QFrame(self.frame_panel_accs)
             self.frame1.setEnabled(True)
             self.frame1.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -160,12 +160,11 @@ class Ui_MainWindow(object):
             self.btn_more_info1.setText("...")
 
         elif acc_object._type == 'Накопительный':
-            print(2)
             self.frame2 = QtWidgets.QFrame(self.frame_panel_savings)
             self.frame2.setEnabled(True)
             self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
             self.frame2.setFrameShadow(QtWidgets.QFrame.Raised)
-            self.frame2.setObjectName("frame_3")
+            self.frame2.setObjectName("frame2")
             self.gridLayout2 = QtWidgets.QGridLayout(self.frame2)
             self.gridLayout2.setContentsMargins(0, 0, 0, -1)
             self.gridLayout2.setObjectName("gridLayout2")
@@ -178,7 +177,7 @@ class Ui_MainWindow(object):
             self.horizontalLayout2.addWidget(self.title2)
             self.desription2 = QtWidgets.QLabel(self.frame2)
             self.desription2.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
-            self.desription2.setObjectName("desription_3")
+            self.desription2.setObjectName("desription2")
             self.horizontalLayout2.addWidget(self.desription2)
             self.verticalLayout2.addLayout(self.horizontalLayout2)
             self.horizontalLayout2 = QtWidgets.QHBoxLayout()
@@ -187,7 +186,7 @@ class Ui_MainWindow(object):
             self.balancecurrency2.setObjectName("balancecurrency2")
             self.horizontalLayout2.addWidget(self.balancecurrency2)
             self.btn_more_info2 = QtWidgets.QToolButton(self.frame2)
-            self.btn_more_info2.setObjectName("btn_more_info_3")
+            self.btn_more_info2.setObjectName("btn_more_info2")
             self.horizontalLayout2.addWidget(self.btn_more_info2)
             self.verticalLayout2.addLayout(self.horizontalLayout2)
             self.gridLayout2.addLayout(self.verticalLayout2, 0, 0, 1, 1)
@@ -204,8 +203,6 @@ class Ui_MainWindow(object):
             acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
                               acc['description'], acc['balance'], acc['add_to_all_balance'])
             self.add_new_account(acc_obj)
-
-
 
     def add_all_accs_to_gui(self):
 
@@ -228,14 +225,16 @@ class Ui_MainWindow(object):
         self.name_panel_savings.setText(_translate("MainWindow", "СБЕРЕЖЕНИЯ"))
         self.all_savings_balance.setText(_translate("MainWindow", "0"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_accounts), _translate("MainWindow", "Счета"))
-        self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_categories), _translate("MainWindow", "Категории"))
-        self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_operations), _translate("MainWindow", "Операции"))
+        self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_categories),
+                                      _translate("MainWindow", "Категории"))
+        self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_operations),
+                                      _translate("MainWindow", "Операции"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_overview), _translate("MainWindow", "Обзор"))
-
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

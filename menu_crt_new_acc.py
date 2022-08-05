@@ -9,7 +9,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QWidget
 
 import json
 
@@ -40,7 +39,7 @@ class Ui_menu_create_account(object):
         font.setBold(True)
         font.setWeight(75)
         self.menu_title_account.setFont(font)
-        self.menu_title_account.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.menu_title_account.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
         self.menu_title_account.setObjectName("menu_title_account")
         self.verticalLayout.addWidget(self.menu_title_account)
         self.formLayout = QtWidgets.QFormLayout()
@@ -132,7 +131,6 @@ class Ui_menu_create_account(object):
         self.btn_add.clicked.connect(lambda: self.get_data_acc())
 
     def get_data_acc(self):
-
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
 
@@ -181,6 +179,7 @@ class Ui_menu_create_account(object):
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     menu_create_account = QtWidgets.QDialog()
     ui = Ui_menu_create_account()
