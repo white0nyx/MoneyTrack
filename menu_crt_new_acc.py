@@ -142,7 +142,7 @@ class Ui_menu_create_account(object):
                 'currency_full': self.currency_selection.currentText(),
                 'currency_short': self.currency_selection.currentText().split()[-1],
                 'description': self.line_description.text(),
-                'balance': self.line_balance.text(),
+                'balance': float(self.line_balance.text()),
                 'add_to_all_balance': self.r_btn_check_in_all_balance.isChecked()
 
             }
@@ -154,6 +154,7 @@ class Ui_menu_create_account(object):
             json.dump(accounts_data, file, indent=4, ensure_ascii=False)
 
         self.parent_window.add_last_acc()
+        self.parent_window.refresh_balances()
 
         self.menu_create_account.close()
 

@@ -116,6 +116,7 @@ class Ui_MainWindow(object):
         self.tab_main_menu.setCurrentIndex(0)
 
         self.add_all_accs_to_gui()
+        self.refresh_balances()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -213,6 +214,36 @@ class Ui_MainWindow(object):
             acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
                               acc['description'], acc['balance'], acc['add_to_all_balance'])
             self.add_new_account(acc_obj)
+
+    def refresh_balances(self):
+        all_balance = all_accs_balance = all_savings_balance = 0
+
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accs = json.load(file)['accounts']
+
+        if len(accs) > 0:
+            for acc in accs:
+                if acc['type'] == 'Обычный':
+                    all_accs_balance += acc['balance']
+                elif acc['type'] == 'Накопительный':
+                    all_savings_balance += acc['balance']
+
+                if acc['add_to_all_balance']:
+                    all_balance += acc['balance']
+        if all_accs_balance == 0:
+            self.all_accs_balance.setText('0 ₽')
+        else:
+            self.all_accs_balance.setText(f'{round(all_balance, 2)} ₽')
+
+        if all_savings_balance == 0:
+            self.all_savings_balance.setText('0 ₽')
+        else:
+            self.all_savings_balance.setText(f'{round(all_savings_balance, 2)} ₽')
+
+        if all_balance == 0:
+            self.all_accounts_balance.setText('0 ₽')
+        else:
+            self.all_accounts_balance.setText(f'{round(all_balance, 2)} ₽')
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
