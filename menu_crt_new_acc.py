@@ -16,9 +16,11 @@ import json
 class Ui_menu_create_account(object):
 
     def __init__(self, parent_window):
+        """Сохранение главного окна для взаимодействия с ним через окно для создания нового счёта"""
         self.parent_window = parent_window
 
     def setupUi(self, menu_create_account):
+        """Прорисовка окна для создания нового счёта"""
         self.menu_create_account = menu_create_account
         menu_create_account.setObjectName("menu_create_account")
         menu_create_account.setEnabled(True)
@@ -131,6 +133,7 @@ class Ui_menu_create_account(object):
         self.btn_add.clicked.connect(lambda: self.get_data_acc())
 
     def get_data_acc(self):
+        """Получение данных из полей и сохранение их в файл app_data/all_accounts.json"""
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
 
