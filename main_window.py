@@ -212,8 +212,10 @@ class Ui_MainWindow(object):
         """Метод для создания и последующей прорисовки объекта-счёта"""
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             acc = json.load(file)['accounts'][-1]
+
+        if not acc['hide']:
             acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
-                              acc['description'], acc['balance'], acc['add_to_all_balance'])
+                              acc['description'], acc['balance'], acc['add_to_all_balance'], acc['hide'])
             self.add_new_account(acc_obj)
 
     def add_all_accs_to_gui(self):
@@ -222,9 +224,11 @@ class Ui_MainWindow(object):
             accounts_data = json.load(file)
 
         for acc in accounts_data['accounts']:
-            acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
-                              acc['description'], acc['balance'], acc['add_to_all_balance'])
-            self.add_new_account(acc_obj)
+            if not acc['hide']:
+                acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
+                                  acc['description'], acc['balance'], acc['add_to_all_balance'], acc['hide'])
+                self.add_new_account(acc_obj)
+        print(1)
 
     def refresh_balances(self):
         """Метод для обновления балансов на главном окне"""

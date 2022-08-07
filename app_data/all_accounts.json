@@ -1,15 +1,4 @@
 {
-    "accounts": [
-        {
-            "id": 1,
-            "title": "Тинькофф",
-            "type": "Обычный",
-            "currency_full": "Российский рубль ₽",
-            "currency_short": "₽",
-            "description": "",
-            "balance": 10000.0,
-            "add_to_all_balance": false
-        }
-    ],
-    "new_id": 2
+    "accounts": [],
+    "new_id": 1
 }
