@@ -146,7 +146,8 @@ class Ui_menu_create_account(object):
                 'currency_short': self.currency_selection.currentText().split()[-1],
                 'description': self.line_description.text(),
                 'balance': float(self.line_balance.text()),
-                'add_to_all_balance': self.r_btn_check_in_all_balance.isChecked()
+                'add_to_all_balance': self.r_btn_check_in_all_balance.isChecked(),
+                'hide': False
 
             }
         )
