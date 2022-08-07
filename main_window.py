@@ -15,6 +15,7 @@ from acc_object import Ui_Form
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        """Метод для прорисовки основного окна"""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(900, 600)
         icon = QtGui.QIcon()
@@ -123,6 +124,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def add_new_account(self, acc_object):
+        """Метод для прорисовки счёта на главном окне"""
 
         if acc_object._type == 'Обычный':
             self.frame1 = QtWidgets.QFrame(self.frame_panel_accs)
@@ -207,6 +209,7 @@ class Ui_MainWindow(object):
         print(self.all_accs_buttons)
 
     def add_last_acc(self):
+        """Метод для создания и последующей прорисовки объекта-счёта"""
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             acc = json.load(file)['accounts'][-1]
             acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
@@ -214,7 +217,7 @@ class Ui_MainWindow(object):
             self.add_new_account(acc_obj)
 
     def add_all_accs_to_gui(self):
-
+        """Метод для прорисовки всех имеющихся счетов"""
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
 
@@ -224,6 +227,7 @@ class Ui_MainWindow(object):
             self.add_new_account(acc_obj)
 
     def refresh_balances(self):
+        """Метод для обновления балансов на главном окне"""
         all_balance = all_accs_balance = all_savings_balance = 0
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
@@ -252,18 +256,6 @@ class Ui_MainWindow(object):
             self.all_accounts_balance.setText('0 ₽')
         else:
             self.all_accounts_balance.setText(f'{round(all_balance, 2)} ₽')
-
-    def add_functions_accs_btns(self):
-
-        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
-            accs = json.load(file)['accounts']
-
-        for btn_list in self.all_accs_buttons:
-            for acc in range(len(accs)):
-                if btn_list[1].text() in accs[acc].values():
-                    btn_list.append(acc)
-
-        print(self.all_accs_buttons)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
