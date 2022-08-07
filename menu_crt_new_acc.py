@@ -104,7 +104,7 @@ class Ui_menu_create_account(object):
         self.check_add_in_all_balance = QtWidgets.QLabel(menu_create_account)
         self.check_add_in_all_balance.setObjectName("check_add_in_all_balance")
         self.add_in_all_balance_menu.addWidget(self.check_add_in_all_balance)
-        self.r_btn_check_in_all_balance = QtWidgets.QRadioButton(menu_create_account)
+        self.r_btn_check_in_all_balance = QtWidgets.QCheckBox(menu_create_account)
         self.r_btn_check_in_all_balance.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.r_btn_check_in_all_balance.setText("")
         self.r_btn_check_in_all_balance.setObjectName("r_btn_check_in_all_balance")

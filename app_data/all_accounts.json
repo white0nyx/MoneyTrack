@@ -2,11 +2,11 @@
     "accounts": [
         {
             "id": 1,
-            "title": "Хуй",
+            "title": "Тинькофф",
             "type": "Обычный",
             "currency_full": "Российский рубль ₽",
             "currency_short": "₽",
-            "description": "Пизда",
+            "description": "",
             "balance": 10000.0,
             "add_to_all_balance": false
         }
