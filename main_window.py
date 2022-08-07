@@ -115,8 +115,11 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.tab_main_menu.setCurrentIndex(0)
 
+        self.all_accs_buttons = []
+
         self.add_all_accs_to_gui()
         self.refresh_balances()
+        self.add_functions_accs_btns()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -154,6 +157,8 @@ class Ui_MainWindow(object):
             self.verticalLayout1.addLayout(self.horizontalLayout1)
             self.gridLayout1.addLayout(self.verticalLayout1, 0, 0, 1, 1)
             self.verticalLayout_2.addWidget(self.frame1)
+
+            self.all_accs_buttons.append([self.btn_more_info1, self.title1])
 
             self.title1.setText(acc_object._title)
             self.desription1.setText(acc_object._description)
@@ -193,10 +198,14 @@ class Ui_MainWindow(object):
             self.gridLayout2.addLayout(self.verticalLayout2, 0, 0, 1, 1)
             self.verticalLayout.addWidget(self.frame2)
 
+            self.all_accs_buttons.append([self.btn_more_info2, self.title2])
+
             self.title2.setText(acc_object._title)
             self.desription2.setText(acc_object._description)
             self.balancecurrency2.setText(f'{acc_object._balance} {acc_object._currency_short}')
             self.btn_more_info2.setText("...")
+
+        print(self.all_accs_buttons)
 
     def add_last_acc(self):
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
@@ -244,6 +253,18 @@ class Ui_MainWindow(object):
             self.all_accounts_balance.setText('0 ₽')
         else:
             self.all_accounts_balance.setText(f'{round(all_balance, 2)} ₽')
+
+    def add_functions_accs_btns(self):
+
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accs = json.load(file)['accounts']
+
+        for btn_list in self.all_accs_buttons:
+            for acc in range(len(accs)):
+                if btn_list[1].text() in accs[acc].values():
+                    btn_list.append(acc)
+
+        print(self.all_accs_buttons)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
