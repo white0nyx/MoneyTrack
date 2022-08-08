@@ -123,9 +123,9 @@ class Ui_MainWindow(object):
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def add_new_account(self, acc_object):
+    def add_new_account(self, acc_object, id_object=None):
         """Метод для прорисовки счёта на главном окне"""
-
+        print('aaa')
         if acc_object._type == 'Обычный':
             self.frame1 = QtWidgets.QFrame(self.frame_panel_accs)
             self.frame1.setEnabled(True)
@@ -159,12 +159,13 @@ class Ui_MainWindow(object):
             self.gridLayout1.addLayout(self.verticalLayout1, 0, 0, 1, 1)
             self.verticalLayout_2.addWidget(self.frame1)
 
-            self.all_accs_buttons.append([self.btn_more_info1, self.title1])
-
             self.title1.setText(acc_object._title)
             self.desription1.setText(acc_object._description)
             self.balancecurrency1.setText(f'{acc_object._balance} {acc_object._currency_short}')
             self.btn_more_info1.setText("...")
+
+            self.all_accs_buttons.append({'btn_acc': self.btn_more_info1,
+                                          'title_acc': self.title1.text()})
 
         elif acc_object._type == 'Накопительный':
             self.frame2 = QtWidgets.QFrame(self.frame_panel_savings)
@@ -199,12 +200,17 @@ class Ui_MainWindow(object):
             self.gridLayout2.addLayout(self.verticalLayout2, 0, 0, 1, 1)
             self.verticalLayout.addWidget(self.frame2)
 
-            self.all_accs_buttons.append([self.btn_more_info2, self.title2])
-
             self.title2.setText(acc_object._title)
             self.desription2.setText(acc_object._description)
             self.balancecurrency2.setText(f'{acc_object._balance} {acc_object._currency_short}')
             self.btn_more_info2.setText("...")
+
+            self.all_accs_buttons.append({'btn_acc': self.btn_more_info2,
+                                          'title_acc': self.title2.text()})
+
+        print(self.all_accs_buttons)
+
+
 
     def add_last_acc(self):
         """Метод для создания и последующей прорисовки объекта-счёта"""
@@ -214,7 +220,8 @@ class Ui_MainWindow(object):
         if not acc['hide']:
             acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
                               acc['description'], acc['balance'], acc['add_to_all_balance'], acc['hide'])
-            self.add_new_account(acc_obj)
+            self.add_new_account(acc_obj, acc['id'])
+
 
     def add_all_accs_to_gui(self):
         """Метод для прорисовки всех имеющихся счетов"""
