@@ -129,7 +129,7 @@ class Ui_menu_edit_account(object):
 
     def retranslateUi(self, menu_edit_account):
         _translate = QtCore.QCoreApplication.translate
-        menu_edit_account.setWindowTitle(_translate("menu_edit_account", "Новый счёт"))
+        menu_edit_account.setWindowTitle(_translate("menu_edit_account", "Редактирование счёта"))
         self.menu_title_account.setText(_translate("menu_edit_account", "Счёт"))
         self.label_title.setText(_translate("menu_edit_account", "Название"))
         self.label_type.setText(_translate("menu_edit_account", "Тип"))
