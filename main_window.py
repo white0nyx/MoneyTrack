@@ -125,7 +125,7 @@ class Ui_MainWindow(object):
 
     def add_new_account(self, acc_object, id_object=None):
         """Метод для прорисовки счёта на главном окне"""
-        print('aaa')
+        
         if acc_object._type == 'Обычный':
             self.frame1 = QtWidgets.QFrame(self.frame_panel_accs)
             self.frame1.setEnabled(True)
@@ -208,10 +208,6 @@ class Ui_MainWindow(object):
             self.all_accs_buttons.append({'btn_acc': self.btn_more_info2,
                                           'title_acc': self.title2.text()})
 
-        print(self.all_accs_buttons)
-
-
-
     def add_last_acc(self):
         """Метод для создания и последующей прорисовки объекта-счёта"""
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
@@ -221,7 +217,6 @@ class Ui_MainWindow(object):
             acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
                               acc['description'], acc['balance'], acc['add_to_all_balance'], acc['hide'])
             self.add_new_account(acc_obj, acc['id'])
-
 
     def add_all_accs_to_gui(self):
         """Метод для прорисовки всех имеющихся счетов"""
