@@ -122,7 +122,6 @@ class Ui_MainWindow(object):
         self.add_all_accs_to_gui()
         self.refresh_balances()
         self.add_functions_to_buttons()
-        print(self.all_accs_buttons)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
