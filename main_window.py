@@ -120,12 +120,13 @@ class Ui_MainWindow(object):
 
         self.add_all_accs_to_gui()
         self.refresh_balances()
+        self.add_functions_to_buttons()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def add_new_account(self, acc_object, id_object=None):
         """Метод для прорисовки счёта на главном окне"""
-        
+
         if acc_object._type == 'Обычный':
             self.frame1 = QtWidgets.QFrame(self.frame_panel_accs)
             self.frame1.setEnabled(True)
@@ -259,6 +260,34 @@ class Ui_MainWindow(object):
             self.all_accounts_balance.setText('0 ₽')
         else:
             self.all_accounts_balance.setText(f'{round(all_balance, 2)} ₽')
+
+    def add_function_to_last_button(self):
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accs = json.load(file)['accounts']
+
+        last_acc = self.all_accs_buttons[-1]
+
+        for acc in accs:
+            if last_acc['title_acc'] == acc['title']:
+                last_acc.update({'acc_data': acc})
+
+        last_acc['btn_acc'].released.connect(lambda x=last_acc['title_acc']: self.show_edit_acc_menu(x))
+
+    def add_functions_to_buttons(self):
+
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accs = json.load(file)['accounts']
+
+        for btn_data in self.all_accs_buttons:
+            for acc in accs:
+                if btn_data['title_acc'] == acc['title']:
+                    btn_data.update({'acc_data': acc})
+
+        for btn_data in self.all_accs_buttons:
+            btn_data['btn_acc'].released.connect(lambda x=btn_data['title_acc']: self.show_edit_acc_menu(x))
+
+    def show_edit_acc_menu(self, title_acc):
+        print(title_acc)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

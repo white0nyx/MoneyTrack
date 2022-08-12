@@ -159,6 +159,7 @@ class Ui_menu_create_account(object):
 
         self.parent_window.add_last_acc()
         self.parent_window.refresh_balances()
+        self.parent_window.add_function_to_last_button()
 
         self.menu_create_account.close()
 
