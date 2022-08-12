@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_menu_edit_account(object):
     def setupUi(self, menu_edit_account):
+        self.menu_edit_account = menu_edit_account
         menu_edit_account.setObjectName("menu_edit_account")
         menu_edit_account.setEnabled(True)
         menu_edit_account.resize(450, 280)
@@ -150,6 +151,11 @@ class Ui_menu_edit_account(object):
         self.remains_line.setText(str(balance))
         self.r_btn_check_in_all_balance.setChecked(add_to_all_balance)
         self.r_btn_check_hide_acc.setChecked(hide)
+
+        self.add_functions_to_buttons()
+
+    def add_functions_to_buttons(self):
+        self.btn_cancel.clicked.connect(lambda: self.menu_edit_account.close())
 
     def retranslateUi(self, menu_edit_account):
         _translate = QtCore.QCoreApplication.translate
