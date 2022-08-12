@@ -118,6 +118,7 @@ class Ui_MainWindow(object):
         self.tab_main_menu.setCurrentIndex(0)
 
         self.all_accs_buttons = []
+        self.frames_accs = []
 
         self.add_all_accs_to_gui()
         self.refresh_balances()
@@ -130,6 +131,7 @@ class Ui_MainWindow(object):
 
         if acc_object._type == 'Обычный':
             self.frame1 = QtWidgets.QFrame(self.frame_panel_accs)
+            self.frames_accs.append(self.frame1)
             self.frame1.setEnabled(True)
             self.frame1.setFrameShape(QtWidgets.QFrame.StyledPanel)
             self.frame1.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -171,6 +173,7 @@ class Ui_MainWindow(object):
 
         elif acc_object._type == 'Накопительный':
             self.frame2 = QtWidgets.QFrame(self.frame_panel_savings)
+            self.frames_accs.append(self.frame2)
             self.frame2.setEnabled(True)
             self.frame2.setFrameShape(QtWidgets.QFrame.StyledPanel)
             self.frame2.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -209,6 +212,8 @@ class Ui_MainWindow(object):
 
             self.all_accs_buttons.append({'btn_acc': self.btn_more_info2,
                                           'title_acc': self.title2.text()})
+
+        self.link_buttons_to_frames()
 
     def add_last_acc(self):
         """Метод для создания и последующей прорисовки объекта-счёта"""
@@ -275,7 +280,9 @@ class Ui_MainWindow(object):
                 last_acc.update({'acc_data': acc})
 
         acc_data = last_acc['acc_data']
-        last_acc['btn_acc'].released.connect(lambda data=acc_data: self.show_edit_acc_menu(data))
+        acc_index = self.all_accs_buttons.index(last_acc)
+        acc_frame = last_acc['frame']
+        last_acc['btn_acc'].released.connect(lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
 
     def add_functions_to_buttons(self):
 
@@ -289,14 +296,20 @@ class Ui_MainWindow(object):
 
         for btn_data in self.all_accs_buttons:
             acc_data = btn_data['acc_data']
-            btn_data['btn_acc'].released.connect(lambda data=acc_data: self.show_edit_acc_menu(data))
+            acc_index = self.all_accs_buttons.index(btn_data)
+            acc_frame = btn_data['frame']
+            btn_data['btn_acc'].released.connect(lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
 
-    def show_edit_acc_menu(self, acc_data):
+    def link_buttons_to_frames(self):
+        for i in range(len(self.frames_accs)):
+            self.all_accs_buttons[i]['frame'] = self.frames_accs[i]
+
+    def show_edit_acc_menu(self, acc_data, acc_index, acc_frame):
         global menu_edit_account
         menu_edit_account = QtWidgets.QDialog()
-        ui = Ui_menu_edit_account()
+        ui = Ui_menu_edit_account(self)
         ui.setupUi(menu_edit_account)
-        ui.fill_in_with_data(acc_data)
+        ui.fill_in_with_data(acc_data, acc_index, acc_frame)
         menu_edit_account.show()
 
 

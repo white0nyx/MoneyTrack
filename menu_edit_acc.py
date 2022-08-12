@@ -9,9 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import json
 
 class Ui_menu_edit_account(object):
+
+    def __init__(self, parent_window):
+        self.parent_window = parent_window
+
     def setupUi(self, menu_edit_account):
         self.menu_edit_account = menu_edit_account
         menu_edit_account.setObjectName("menu_edit_account")
@@ -128,7 +132,7 @@ class Ui_menu_edit_account(object):
         self.retranslateUi(menu_edit_account)
         QtCore.QMetaObject.connectSlotsByName(menu_edit_account)
 
-    def fill_in_with_data(self, acc_data):
+    def fill_in_with_data(self, acc_data, acc_index, acc_frame):
         title = acc_data['title']
         type_ = acc_data['type']
         currency_index = acc_data['currency_index']
@@ -152,10 +156,37 @@ class Ui_menu_edit_account(object):
         self.r_btn_check_in_all_balance.setChecked(add_to_all_balance)
         self.r_btn_check_hide_acc.setChecked(hide)
 
+        self.acc_index = acc_index
+        self.acc_frame = acc_frame
+        print(self.acc_frame)
         self.add_functions_to_buttons()
 
     def add_functions_to_buttons(self):
         self.btn_cancel.clicked.connect(lambda: self.menu_edit_account.close())
+        self.btn_delete.clicked.connect(lambda: self.delete_acc_with_ask())
+
+    def delete_acc(self):
+
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accounts_data = json.load(file)
+        self.btn_delete.deleteLater()
+
+        accounts = accounts_data['accounts']
+        del accounts[self.acc_index]
+        accounts_data['accounts'] = accounts
+
+        with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
+            json.dump(accounts_data, file, indent=4, ensure_ascii=False)
+
+    def delete_acc_with_ask(self):
+        self.delete_acc()
+        self.parent_window.add_all_accs_to_gui()
+        # self.menu_edit_account.close()
+
+    def accept_changes(self):
+        print('accept changes acc')
+
+
 
     def retranslateUi(self, menu_edit_account):
         _translate = QtCore.QCoreApplication.translate
