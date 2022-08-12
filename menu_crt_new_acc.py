@@ -143,6 +143,7 @@ class Ui_menu_create_account(object):
                 'title': self.line_title.text(),
                 'type': self.type_selection.currentText(),
                 'currency_full': self.currency_selection.currentText(),
+                'currency_index': self.currency_selection.currentIndex(),
                 'currency_short': self.currency_selection.currentText().split()[-1],
                 'description': self.line_description.text(),
                 'balance': float(self.line_balance.text()),

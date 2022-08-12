@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 from acc_object import Ui_Form
+from menu_edit_acc import Ui_menu_edit_account
 
 
 class Ui_MainWindow(object):
@@ -121,6 +122,7 @@ class Ui_MainWindow(object):
         self.add_all_accs_to_gui()
         self.refresh_balances()
         self.add_functions_to_buttons()
+        print(self.all_accs_buttons)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -215,8 +217,9 @@ class Ui_MainWindow(object):
             acc = json.load(file)['accounts'][-1]
 
         if not acc['hide']:
-            acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
-                              acc['description'], acc['balance'], acc['add_to_all_balance'], acc['hide'])
+            acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_index'],
+                              acc['currency_short'], acc['description'], acc['balance'], acc['add_to_all_balance'],
+                              acc['hide'])
             self.add_new_account(acc_obj, acc['id'])
 
     def add_all_accs_to_gui(self):
@@ -226,8 +229,9 @@ class Ui_MainWindow(object):
 
         for acc in accounts_data['accounts']:
             if not acc['hide']:
-                acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_short'],
-                                  acc['description'], acc['balance'], acc['add_to_all_balance'], acc['hide'])
+                acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_index'],
+                                  acc['currency_short'], acc['description'], acc['balance'], acc['add_to_all_balance'],
+                                  acc['hide'])
                 self.add_new_account(acc_obj)
 
     def refresh_balances(self):
@@ -271,7 +275,8 @@ class Ui_MainWindow(object):
             if last_acc['title_acc'] == acc['title']:
                 last_acc.update({'acc_data': acc})
 
-        last_acc['btn_acc'].released.connect(lambda x=last_acc['title_acc']: self.show_edit_acc_menu(x))
+        acc_data = last_acc['acc_data']
+        last_acc['btn_acc'].released.connect(lambda data=acc_data: self.show_edit_acc_menu(data))
 
     def add_functions_to_buttons(self):
 
@@ -284,10 +289,17 @@ class Ui_MainWindow(object):
                     btn_data.update({'acc_data': acc})
 
         for btn_data in self.all_accs_buttons:
-            btn_data['btn_acc'].released.connect(lambda x=btn_data['title_acc']: self.show_edit_acc_menu(x))
+            acc_data = btn_data['acc_data']
+            btn_data['btn_acc'].released.connect(lambda data=acc_data: self.show_edit_acc_menu(data))
 
-    def show_edit_acc_menu(self, title_acc):
-        print(title_acc)
+    def show_edit_acc_menu(self, acc_data):
+        global menu_edit_account
+        menu_edit_account = QtWidgets.QDialog()
+        ui = Ui_menu_edit_account()
+        ui.setupUi(menu_edit_account)
+        ui.fill_in_with_data(acc_data)
+        menu_edit_account.show()
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

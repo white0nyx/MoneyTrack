@@ -13,10 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):
 
-    def __init__(self, title, type_, currency_full, currency_short, description, balance, add_to_all_balance, hide):
+    def __init__(self, title, type_, currency_full, currency_index, currency_short, description, balance, add_to_all_balance, hide):
         self._title = title
         self._type = type_
         self._currency_full = currency_full
+        self._currency_index = currency_index
         self._currency_short = currency_short
         self._description = description
         self._balance = balance

@@ -124,8 +124,34 @@ class Ui_menu_edit_account(object):
         self.h_layout_for_buttons.addWidget(self.btn_cancel)
         self.verticalLayout.addLayout(self.h_layout_for_buttons)
 
+        self.btn_add.clicked.connect(lambda: print(self.type_selection.currentIndex()))
+
         self.retranslateUi(menu_edit_account)
         QtCore.QMetaObject.connectSlotsByName(menu_edit_account)
+
+    def fill_in_with_data(self, acc_data):
+        title = acc_data['title']
+        type_ = acc_data['type']
+        currency_index = acc_data['currency_index']
+        description = acc_data['description']
+        balance = acc_data['balance']
+        add_to_all_balance = acc_data['add_to_all_balance']
+        hide = acc_data['hide']
+
+        self.line_title.setText(title)
+
+        type_index = 0
+        if type_ == 'Обычный':
+            type_index = 0
+        elif type_ == 'Накопительный':
+            type_index = 1
+
+        self.type_selection.setCurrentIndex(type_index)
+        self.currency_selection.setCurrentIndex(currency_index)
+        self.line_description.setText(description)
+        self.remains_line.setText(str(balance))
+        self.r_btn_check_in_all_balance.setChecked(add_to_all_balance)
+        self.r_btn_check_hide_acc.setChecked(hide)
 
     def retranslateUi(self, menu_edit_account):
         _translate = QtCore.QCoreApplication.translate
@@ -145,7 +171,7 @@ class Ui_menu_edit_account(object):
         self.check_add_in_all_balance.setText(_translate("menu_edit_account", "Учитывать в общем балансе"))
         self.hide_acc.setText(_translate("menu_edit_account", "Скрыть счёт"))
         self.btn_delete.setText(_translate("menu_edit_account", "Удалить счёт"))
-        self.btn_add.setText(_translate("menu_edit_account", "Добавить"))
+        self.btn_add.setText(_translate("menu_edit_account", "Применить"))
         self.btn_cancel.setText(_translate("menu_edit_account", "Отменить"))
 
 
