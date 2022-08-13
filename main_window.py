@@ -223,10 +223,10 @@ class Ui_MainWindow(object):
         if only_last:
             accounts_data = (accounts_data[-1],)
 
-        for acc in accounts_data:
-            if not acc['hide']:
-                acc_obj = Ui_Form(acc)
-                self.add_new_account(acc_obj)
+        for account in accounts_data:
+            if not account['hide']:
+                account_obj = Ui_Form(account)
+                self.add_new_account(account_obj)
 
     def update_balances(self):
         """Метод для обновления балансов на главном окне"""
