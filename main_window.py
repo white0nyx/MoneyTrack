@@ -254,6 +254,7 @@ class Ui_MainWindow(object):
 
                 if acc['add_to_all_balance']:
                     all_balance += acc['balance']
+
         if all_accs_balance == 0:
             self.all_accs_balance.setText('0 ₽')
         else:

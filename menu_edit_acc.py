@@ -133,6 +133,7 @@ class Ui_menu_edit_account(object):
         QtCore.QMetaObject.connectSlotsByName(menu_edit_account)
 
     def fill_in_with_data(self, acc_data, acc_index, acc_frame):
+        self.acc_data = acc_data
         title = acc_data['title']
         type_ = acc_data['type']
         currency_index = acc_data['currency_index']
@@ -159,6 +160,7 @@ class Ui_menu_edit_account(object):
         self.acc_index = acc_index
         self.acc_frame = acc_frame
         print(self.acc_frame)
+        print(self.acc_data)
         self.add_functions_to_buttons()
 
     def add_functions_to_buttons(self):
@@ -172,7 +174,7 @@ class Ui_menu_edit_account(object):
         self.btn_delete.deleteLater()
 
         accounts = accounts_data['accounts']
-        del accounts[self.acc_index]
+        accounts.remove(self.acc_data)
         accounts_data['accounts'] = accounts
 
         with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
@@ -180,8 +182,8 @@ class Ui_menu_edit_account(object):
 
     def delete_acc_with_ask(self):
         self.delete_acc()
-        self.parent_window.add_all_accs_to_gui()
-        # self.menu_edit_account.close()
+        self.acc_frame.deleteLater()
+        self.menu_edit_account.close()
 
     def accept_changes(self):
         print('accept changes acc')
