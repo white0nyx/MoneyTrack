@@ -13,16 +13,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):
 
-    def __init__(self, title, type_, currency_full, currency_index, currency_short, description, balance, add_to_all_balance, hide):
-        self._title = title
-        self._type = type_
-        self._currency_full = currency_full
-        self._currency_index = currency_index
-        self._currency_short = currency_short
-        self._description = description
-        self._balance = balance
-        self._add_to_all_balance = add_to_all_balance
-        self._hide = hide
+    def __init__(self, account_data):
+        self._title = account_data['title']
+        self._type = account_data['type']
+        self._currency_full = account_data['currency_full']
+        self._currency_index = account_data['currency_index']
+        self._currency_short = account_data['currency_short']
+        self._description = account_data['description']
+        self._balance = account_data['balance']
+        self._add_to_all_balance = account_data['add_to_all_balance']
+        self._hide = account_data['hide']
 
     def setupUi(self, Form):
         Form.setObjectName("Form")

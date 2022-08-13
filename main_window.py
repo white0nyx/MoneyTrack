@@ -225,9 +225,7 @@ class Ui_MainWindow(object):
 
         for acc in accounts_data:
             if not acc['hide']:
-                acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_index'],
-                                  acc['currency_short'], acc['description'], acc['balance'], acc['add_to_all_balance'],
-                                  acc['hide'])
+                acc_obj = Ui_Form(acc)
                 self.add_new_account(acc_obj)
 
     def update_balances(self):
