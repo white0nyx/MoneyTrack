@@ -245,20 +245,19 @@ class Ui_MainWindow(object):
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accs = json.load(file)['accounts']
 
-        if len(accs) > 0:
-            for acc in accs:
-                if acc['type'] == 'Обычный':
-                    all_accs_balance += acc['balance']
-                elif acc['type'] == 'Накопительный':
-                    all_savings_balance += acc['balance']
+        for acc in accs:
+            if acc['type'] == 'Обычный':
+                all_accs_balance += acc['balance']
+            elif acc['type'] == 'Накопительный':
+                all_savings_balance += acc['balance']
 
-                if acc['add_to_all_balance']:
-                    all_balance += acc['balance']
+            if acc['add_to_all_balance']:
+                all_balance += acc['balance']
 
         if all_accs_balance == 0:
             self.all_accs_balance.setText('0 ₽')
         else:
-            self.all_accs_balance.setText(f'{round(all_balance, 2)} ₽')
+            self.all_accs_balance.setText(f'{round(all_accs_balance, 2)} ₽')
 
         if all_savings_balance == 0:
             self.all_savings_balance.setText('0 ₽')
