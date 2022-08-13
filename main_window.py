@@ -121,7 +121,7 @@ class Ui_MainWindow(object):
         self.frames_accs = []
 
         self.add_all_accs_to_gui()
-        self.refresh_balances()
+        self.update_balances()
         self.add_functions_to_buttons()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -238,36 +238,29 @@ class Ui_MainWindow(object):
                                   acc['hide'])
                 self.add_new_account(acc_obj)
 
-    def refresh_balances(self):
+    def update_balances(self):
         """Метод для обновления балансов на главном окне"""
-        all_balance = all_accs_balance = all_savings_balance = 0
+        all_balance = all_accounts_balance = all_savings_balance = 0
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
-            accs = json.load(file)['accounts']
+            all_accounts = json.load(file)['accounts']
 
-        for acc in accs:
-            if acc['type'] == 'Обычный':
-                all_accs_balance += acc['balance']
-            elif acc['type'] == 'Накопительный':
-                all_savings_balance += acc['balance']
+        for account in all_accounts:
+            if account['type'] == 'Обычный':
+                all_accounts_balance += account['balance']
+            elif account['type'] == 'Накопительный':
+                all_savings_balance += account['balance']
 
-            if acc['add_to_all_balance']:
-                all_balance += acc['balance']
+            if account['add_to_all_balance']:
+                all_balance += account['balance']
 
-        if all_accs_balance == 0:
-            self.all_accs_balance.setText('0 ₽')
-        else:
-            self.all_accs_balance.setText(f'{round(all_accs_balance, 2)} ₽')
+        self.all_accs_balance.setText(f'{self.remove_extra_zeros(round(all_accounts_balance, 2))} ₽')
+        self.all_savings_balance.setText(f'{self.remove_extra_zeros(round(all_savings_balance, 2))} ₽')
+        self.all_accounts_balance.setText(f'{self.remove_extra_zeros(round(all_balance, 2))} ₽')
 
-        if all_savings_balance == 0:
-            self.all_savings_balance.setText('0 ₽')
-        else:
-            self.all_savings_balance.setText(f'{round(all_savings_balance, 2)} ₽')
-
-        if all_balance == 0:
-            self.all_accounts_balance.setText('0 ₽')
-        else:
-            self.all_accounts_balance.setText(f'{round(all_balance, 2)} ₽')
+    @staticmethod
+    def remove_extra_zeros(number):
+        return int(number) if int(number) - number == 0.0 else number
 
     def add_function_to_last_button(self):
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
@@ -282,7 +275,8 @@ class Ui_MainWindow(object):
         acc_data = last_acc['acc_data']
         acc_index = self.all_accs_buttons.index(last_acc)
         acc_frame = last_acc['frame']
-        last_acc['btn_acc'].released.connect(lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
+        last_acc['btn_acc'].released.connect(
+            lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
 
     def add_functions_to_buttons(self):
 
@@ -298,7 +292,8 @@ class Ui_MainWindow(object):
             acc_data = btn_data['acc_data']
             acc_index = self.all_accs_buttons.index(btn_data)
             acc_frame = btn_data['frame']
-            btn_data['btn_acc'].released.connect(lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
+            btn_data['btn_acc'].released.connect(
+                lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
 
     def link_buttons_to_frames(self):
         for i in range(len(self.frames_accs)):
@@ -311,7 +306,6 @@ class Ui_MainWindow(object):
         ui.setupUi(menu_edit_account)
         ui.fill_in_with_data(acc_data, acc_index, acc_frame)
         menu_edit_account.show()
-
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

@@ -183,7 +183,7 @@ class Ui_menu_edit_account(object):
     def delete_acc_with_ask(self):
         self.delete_acc()
         self.acc_frame.deleteLater()
-        self.parent_window.refresh_balances()
+        self.parent_window.update_balances()
         self.menu_edit_account.close()
 
     def accept_changes(self):

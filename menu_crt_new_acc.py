@@ -159,7 +159,7 @@ class Ui_menu_create_account(object):
             json.dump(accounts_data, file, indent=4, ensure_ascii=False)
 
         self.parent_window.add_last_acc()
-        self.parent_window.refresh_balances()
+        self.parent_window.update_balances()
         self.parent_window.add_function_to_last_button()
 
         self.menu_create_account.close()
