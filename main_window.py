@@ -120,13 +120,13 @@ class Ui_MainWindow(object):
         self.all_accs_buttons = []
         self.frames_accs = []
 
-        self.add_all_accs_to_gui()
+        self.add_accounts_to_gui()
         self.update_balances()
         self.add_functions_to_buttons()
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def add_new_account(self, acc_object, id_object=None):
+    def add_new_account(self, acc_object):
         """Метод для прорисовки счёта на главном окне"""
 
         if acc_object._type == 'Обычный':
@@ -215,23 +215,15 @@ class Ui_MainWindow(object):
 
         self.link_buttons_to_frames()
 
-    def add_last_acc(self):
-        """Метод для создания и последующей прорисовки объекта-счёта"""
-        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
-            acc = json.load(file)['accounts'][-1]
-
-        if not acc['hide']:
-            acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_index'],
-                              acc['currency_short'], acc['description'], acc['balance'], acc['add_to_all_balance'],
-                              acc['hide'])
-            self.add_new_account(acc_obj, acc['id'])
-
-    def add_all_accs_to_gui(self):
+    def add_accounts_to_gui(self, only_last=False):
         """Метод для прорисовки всех имеющихся счетов"""
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
-            accounts_data = json.load(file)
+            accounts_data = json.load(file)['accounts']
 
-        for acc in accounts_data['accounts']:
+        if only_last:
+            accounts_data = (accounts_data[-1],)
+
+        for acc in accounts_data:
             if not acc['hide']:
                 acc_obj = Ui_Form(acc['title'], acc['type'], acc['currency_full'], acc['currency_index'],
                                   acc['currency_short'], acc['description'], acc['balance'], acc['add_to_all_balance'],

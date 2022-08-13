@@ -158,7 +158,7 @@ class Ui_menu_create_account(object):
         with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
             json.dump(accounts_data, file, indent=4, ensure_ascii=False)
 
-        self.parent_window.add_last_acc()
+        self.parent_window.add_accounts_to_gui(only_last=True)
         self.parent_window.update_balances()
         self.parent_window.add_function_to_last_button()
 
