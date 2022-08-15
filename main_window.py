@@ -261,26 +261,16 @@ class Ui_MainWindow(object):
     def remove_extra_zeros(number):
         return int(number) if int(number) - number == 0.0 else number
 
-    def add_function_to_last_button(self):
-        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
-            accs = json.load(file)['accounts']
-
-        last_button = self.all_accs_buttons[-1]
-
-        for acc in accs:
-            if last_button['title_acc'] == acc['title']:
-                last_button.update({'acc_data': acc})
-
-        last_button['btn_acc'].released.connect(
-            lambda btn=last_button: self.show_edit_acc_menu(btn))
-
-    def add_functions_to_buttons(self):
+    def add_functions_to_buttons(self, only_last=False):
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
-            accs = json.load(file)['accounts']
+            accounts = json.load(file)['accounts']
+
+        if only_last:
+            accounts = (accounts[-1], )
 
         for btn_data in self.all_accs_buttons:
-            for acc in accs:
+            for acc in accounts:
                 if btn_data['title_acc'] == acc['title']:
                     btn_data.update({'acc_data': acc})
 
