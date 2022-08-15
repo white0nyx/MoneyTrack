@@ -171,7 +171,6 @@ class Ui_menu_edit_account(object):
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
-        self.btn_delete.deleteLater()
 
         accounts = accounts_data['accounts']
         accounts.remove(self.account_data)
