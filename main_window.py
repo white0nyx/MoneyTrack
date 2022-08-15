@@ -123,6 +123,7 @@ class Ui_MainWindow(object):
         self.add_accounts_to_gui()
         self.update_balances()
         self.add_functions_to_buttons()
+        self.btn_settings.clicked.connect(lambda: print(self.all_accs_buttons, self.frames_accs, sep='\n'))
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -248,6 +249,11 @@ class Ui_MainWindow(object):
         self.all_savings_balance.setText(f'{self.remove_extra_zeros(round(all_savings_balance, 2))} ₽')
         self.all_accounts_balance.setText(f'{self.remove_extra_zeros(round(all_balance, 2))} ₽')
 
+    def update_accounts_gui(self):
+        for account_frame in self.frames_accs:
+            account_frame.deleteLater()
+        self.add_accounts_to_gui()
+
     @staticmethod
     def remove_extra_zeros(number):
         return int(number) if int(number) - number == 0.0 else number
@@ -256,17 +262,14 @@ class Ui_MainWindow(object):
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accs = json.load(file)['accounts']
 
-        last_acc = self.all_accs_buttons[-1]
+        last_button = self.all_accs_buttons[-1]
 
         for acc in accs:
-            if last_acc['title_acc'] == acc['title']:
-                last_acc.update({'acc_data': acc})
+            if last_button['title_acc'] == acc['title']:
+                last_button.update({'acc_data': acc})
 
-        acc_data = last_acc['acc_data']
-        acc_index = self.all_accs_buttons.index(last_acc)
-        acc_frame = last_acc['frame']
-        last_acc['btn_acc'].released.connect(
-            lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
+        last_button['btn_acc'].released.connect(
+            lambda btn=last_button: self.show_edit_acc_menu(btn))
 
     def add_functions_to_buttons(self):
 
@@ -278,23 +281,20 @@ class Ui_MainWindow(object):
                 if btn_data['title_acc'] == acc['title']:
                     btn_data.update({'acc_data': acc})
 
-        for btn_data in self.all_accs_buttons:
-            acc_data = btn_data['acc_data']
-            acc_index = self.all_accs_buttons.index(btn_data)
-            acc_frame = btn_data['frame']
-            btn_data['btn_acc'].released.connect(
-                lambda data=acc_data, index=acc_index, frame=acc_frame: self.show_edit_acc_menu(data, index, frame))
+        for button in self.all_accs_buttons:
+            button['btn_acc'].released.connect(
+                lambda btn=button: self.show_edit_acc_menu(btn))
 
     def link_buttons_to_frames(self):
         for i in range(len(self.frames_accs)):
             self.all_accs_buttons[i]['frame'] = self.frames_accs[i]
 
-    def show_edit_acc_menu(self, acc_data, acc_index, acc_frame):
+    def show_edit_acc_menu(self, account_btn):
         global menu_edit_account
         menu_edit_account = QtWidgets.QDialog()
         ui = Ui_menu_edit_account(self)
         ui.setupUi(menu_edit_account)
-        ui.fill_in_with_data(acc_data, acc_index, acc_frame)
+        ui.fill_in_with_data(account_btn)
         menu_edit_account.show()
 
     def retranslateUi(self, MainWindow):

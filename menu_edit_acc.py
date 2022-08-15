@@ -132,15 +132,22 @@ class Ui_menu_edit_account(object):
         self.retranslateUi(menu_edit_account)
         QtCore.QMetaObject.connectSlotsByName(menu_edit_account)
 
-    def fill_in_with_data(self, acc_data, acc_index, acc_frame):
-        self.acc_data = acc_data
-        title = acc_data['title']
-        type_ = acc_data['type']
-        currency_index = acc_data['currency_index']
-        description = acc_data['description']
-        balance = acc_data['balance']
-        add_to_all_balance = acc_data['add_to_all_balance']
-        hide = acc_data['hide']
+    def fill_in_with_data(self, account_btn):
+        self.account_btn = account_btn
+        self.account_data = account_btn['acc_data']
+        self.account_index = self.parent_window.all_accs_buttons.index(account_btn)
+        self.acccout_frame = self.parent_window.all_accs_buttons[self.account_index]['frame']
+        print(self.account_data, self.account_index, self.acccout_frame)
+        print()
+        print(self.parent_window.all_accs_buttons)
+
+        title = self.account_data['title']
+        type_ = self.account_data['type']
+        currency_index = self.account_data['currency_index']
+        description = self.account_data['description']
+        balance = self.account_data['balance']
+        add_to_all_balance = self.account_data['add_to_all_balance']
+        hide = self.account_data['hide']
 
         self.line_title.setText(title)
 
@@ -156,11 +163,6 @@ class Ui_menu_edit_account(object):
         self.remains_line.setText(str(balance))
         self.r_btn_check_in_all_balance.setChecked(add_to_all_balance)
         self.r_btn_check_hide_acc.setChecked(hide)
-
-        self.acc_index = acc_index
-        self.acc_frame = acc_frame
-        print(self.acc_frame)
-        print(self.acc_data)
         self.add_functions_to_buttons()
 
     def add_functions_to_buttons(self):
@@ -174,7 +176,7 @@ class Ui_menu_edit_account(object):
         self.btn_delete.deleteLater()
 
         accounts = accounts_data['accounts']
-        accounts.remove(self.acc_data)
+        accounts.remove(self.account_data)
         accounts_data['accounts'] = accounts
 
         with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
@@ -182,14 +184,14 @@ class Ui_menu_edit_account(object):
 
     def delete_acc_with_ask(self):
         self.delete_acc()
-        self.acc_frame.deleteLater()
+        self.acccout_frame.deleteLater()
+        self.parent_window.frames_accs.remove(self.acccout_frame)
+        self.parent_window.all_accs_buttons.remove(self.account_btn)
         self.parent_window.update_balances()
         self.menu_edit_account.close()
 
     def accept_changes(self):
         print('accept changes acc')
-
-
 
     def retranslateUi(self, menu_edit_account):
         _translate = QtCore.QCoreApplication.translate
