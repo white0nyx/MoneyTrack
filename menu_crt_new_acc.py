@@ -161,6 +161,9 @@ class Ui_menu_create_account(object):
         self.parent_window.add_accounts_to_gui(only_last=True)
         self.parent_window.update_balances()
         self.parent_window.add_functions_to_buttons(only_last=True)
+        self.parent_window.update_accounts_gui()
+        self.parent_window.add_functions_to_buttons()
+        self.parent_window.update_balances()
 
         self.menu_create_account.close()
 
