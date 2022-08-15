@@ -11,6 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 
+from PyQt5.QtWidgets import QMessageBox
+
+
 class Ui_menu_edit_account(object):
 
     def __init__(self, parent_window):
@@ -164,10 +167,10 @@ class Ui_menu_edit_account(object):
 
     def add_functions_to_buttons(self):
         self.btn_cancel.clicked.connect(lambda: self.menu_edit_account.close())
-        self.btn_delete.clicked.connect(lambda: self.delete_acc_with_ask())
+        self.btn_delete.clicked.connect(lambda: self.deletion_request())
         self.btn_accept.clicked.connect(lambda: self.accept_changes())
 
-    def delete_acc(self):
+    def delete_account_data(self):
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
@@ -183,14 +186,26 @@ class Ui_menu_edit_account(object):
         self.parent_window.frames_accs.remove(self.acccout_frame)
         del self.parent_window.all_accs_buttons[self.account_index]
 
-    def delete_acc_with_ask(self):
-        # Позже здесь будет реализован функционал диалогового окна для удаления счёта
-        self.delete_acc()
-        self.menu_edit_account.close()
-        self.parent_window.update_balances()
+    def deletion_request(self):
+
+        delete_ask = QMessageBox()
+        delete_ask.setWindowTitle('Подтверждение удаления')
+        delete_ask.setText(f'Вы уверены, что хотите удалить счёт {self.account_data["title"]}?')
+        delete_ask.setIcon(QMessageBox.Warning)
+        delete_ask.setInformativeText('Все связанные с ним операции удалятся.\nРекомендуется выбрать "Скрыть счёт".')
+        delete_ask.addButton('Отмена', QMessageBox.AcceptRole)
+        delete_ask.addButton('Удалить', QMessageBox.RejectRole)
+        delete_ask.buttonClicked.connect(self.full_delete_account)
+        delete_ask.exec_()
+
+    def full_delete_account(self, btn):
+        if btn.text() == 'Удалить':
+            self.delete_account_data()
+            self.menu_edit_account.close()
+            self.parent_window.update_balances()
 
     def accept_changes(self):
-        self.delete_acc()
+        self.delete_account_data()
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
