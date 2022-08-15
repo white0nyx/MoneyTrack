@@ -120,10 +120,10 @@ class Ui_menu_edit_account(object):
         self.h_layout_for_buttons.addWidget(self.btn_delete)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.h_layout_for_buttons.addItem(spacerItem2)
-        self.btn_add = QtWidgets.QPushButton(menu_edit_account)
-        self.btn_add.setDefault(True)
-        self.btn_add.setObjectName("btn_add")
-        self.h_layout_for_buttons.addWidget(self.btn_add)
+        self.btn_accept = QtWidgets.QPushButton(menu_edit_account)
+        self.btn_accept.setDefault(True)
+        self.btn_accept.setObjectName("btn_add")
+        self.h_layout_for_buttons.addWidget(self.btn_accept)
         self.btn_cancel = QtWidgets.QPushButton(menu_edit_account)
         self.btn_cancel.setObjectName("btn_cancel")
         self.h_layout_for_buttons.addWidget(self.btn_cancel)
@@ -137,9 +137,6 @@ class Ui_menu_edit_account(object):
         self.account_data = account_btn['acc_data']
         self.account_index = self.parent_window.all_accs_buttons.index(account_btn)
         self.acccout_frame = self.parent_window.all_accs_buttons[self.account_index]['frame']
-        print(self.account_data, self.account_index, self.acccout_frame)
-        print()
-        print(self.parent_window.all_accs_buttons)
 
         title = self.account_data['title']
         type_ = self.account_data['type']
@@ -168,6 +165,7 @@ class Ui_menu_edit_account(object):
     def add_functions_to_buttons(self):
         self.btn_cancel.clicked.connect(lambda: self.menu_edit_account.close())
         self.btn_delete.clicked.connect(lambda: self.delete_acc_with_ask())
+        self.btn_accept.clicked.connect(lambda: self.accept_changes())
 
     def delete_acc(self):
 
@@ -184,16 +182,43 @@ class Ui_menu_edit_account(object):
 
         self.acccout_frame.deleteLater()
         self.parent_window.frames_accs.remove(self.acccout_frame)
-        self.parent_window.all_accs_buttons.remove(self.account_btn)
-        self.parent_window.update_balances()
+        del self.parent_window.all_accs_buttons[self.account_index]
 
     def delete_acc_with_ask(self):
         # Позже здесь будет реализован функционал диалогового окна для удаления счёта
         self.delete_acc()
         self.menu_edit_account.close()
+        self.parent_window.update_balances()
 
     def accept_changes(self):
-        print('accept changes acc')
+        self.delete_acc()
+
+        with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
+            accounts_data = json.load(file)
+        accounts = accounts_data['accounts']
+        accounts.insert(
+            self.account_index,
+            {
+                'id': accounts_data['new_id'],
+                'title': self.line_title.text(),
+                'type': self.type_selection.currentText(),
+                'currency_full': self.currency_selection.currentText(),
+                'currency_index': self.currency_selection.currentIndex(),
+                'currency_short': self.currency_selection.currentText().split()[-1],
+                'description': self.line_description.text(),
+                'balance': float(self.remains_line.text()),
+                'add_to_all_balance': self.r_btn_check_in_all_balance.isChecked(),
+                'hide': self.r_btn_check_hide_acc.isChecked()
+            }
+        )
+
+        with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
+            json.dump(accounts_data, file, indent=4, ensure_ascii=False)
+
+        self.parent_window.update_accounts_gui()
+        self.parent_window.add_functions_to_buttons()
+        self.parent_window.update_balances()
+        self.menu_edit_account.close()
 
     def retranslateUi(self, menu_edit_account):
         _translate = QtCore.QCoreApplication.translate
@@ -213,7 +238,7 @@ class Ui_menu_edit_account(object):
         self.check_add_in_all_balance.setText(_translate("menu_edit_account", "Учитывать в общем балансе"))
         self.hide_acc.setText(_translate("menu_edit_account", "Скрыть счёт"))
         self.btn_delete.setText(_translate("menu_edit_account", "Удалить счёт"))
-        self.btn_add.setText(_translate("menu_edit_account", "Применить"))
+        self.btn_accept.setText(_translate("menu_edit_account", "Применить"))
         self.btn_cancel.setText(_translate("menu_edit_account", "Отменить"))
 
 

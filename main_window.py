@@ -123,7 +123,8 @@ class Ui_MainWindow(object):
         self.add_accounts_to_gui()
         self.update_balances()
         self.add_functions_to_buttons()
-        self.btn_settings.clicked.connect(lambda: print(self.all_accs_buttons, self.frames_accs, sep='\n'))
+        self.btn_settings.clicked.connect(lambda: print(f'Количество кнопок на данный момент: {len(self.all_accs_buttons)}\n',
+                                                        f'Количество фреймов на данный момент: {len(self.frames_accs)}'))
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -252,6 +253,8 @@ class Ui_MainWindow(object):
     def update_accounts_gui(self):
         for account_frame in self.frames_accs:
             account_frame.deleteLater()
+        self.frames_accs = []
+        self.all_accs_buttons = []
         self.add_accounts_to_gui()
 
     @staticmethod
