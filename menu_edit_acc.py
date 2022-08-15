@@ -182,12 +182,14 @@ class Ui_menu_edit_account(object):
         with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
             json.dump(accounts_data, file, indent=4, ensure_ascii=False)
 
-    def delete_acc_with_ask(self):
-        self.delete_acc()
         self.acccout_frame.deleteLater()
         self.parent_window.frames_accs.remove(self.acccout_frame)
         self.parent_window.all_accs_buttons.remove(self.account_btn)
         self.parent_window.update_balances()
+
+    def delete_acc_with_ask(self):
+        # Позже здесь будет реализован функционал диалогового окна для удаления счёта
+        self.delete_acc()
         self.menu_edit_account.close()
 
     def accept_changes(self):
