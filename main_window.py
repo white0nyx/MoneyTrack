@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 from acc_object import Ui_Form
 from menu_edit_acc import Ui_menu_edit_account
+from menu_settings import Ui_SettingsMenu
 
 
 class Ui_MainWindow(object):
@@ -123,10 +124,17 @@ class Ui_MainWindow(object):
         self.add_accounts_to_gui()
         self.update_balances()
         self.add_functions_to_buttons()
-        self.btn_settings.clicked.connect(lambda: print(f'Количество кнопок на данный момент: {len(self.all_accs_buttons)}\n',
-                                                        f'Количество фреймов на данный момент: {len(self.frames_accs)}'))
+        self.btn_settings.clicked.connect(self.open_settings_menu)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def open_settings_menu(self):
+        global SettingsMenu
+        SettingsMenu = QtWidgets.QMainWindow()
+        ui = Ui_SettingsMenu()
+        ui.setupUi(SettingsMenu)
+        SettingsMenu.show()
+
 
     def add_new_account(self, acc_object):
         """Метод для прорисовки счёта на главном окне"""
