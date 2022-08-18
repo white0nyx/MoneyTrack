@@ -67,7 +67,7 @@ class Ui_frame_operation(object):
         self.label.setText(_translate("frame_operation", "Category (Under category)"))
         self.label_2.setText(_translate("frame_operation", "Account"))
         self.label_3.setText(_translate("frame_operation", "amount"))
-        self.label_4.setText(_translate("frame_operation", "Commentary"))
+        self.label_4.setText(_translate("frame_operation", "Date"))
 
 
 if __name__ == "__main__":
