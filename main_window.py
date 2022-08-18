@@ -13,6 +13,7 @@ import json
 from acc_object import Ui_Form
 from menu_edit_acc import Ui_menu_edit_account
 from menu_settings import Ui_SettingsMenu
+from operation_object import Ui_frame_operation
 
 
 class Ui_MainWindow(object):
@@ -108,6 +109,52 @@ class Ui_MainWindow(object):
         self.tab_main_menu.addTab(self.tab_categories, "")
         self.tab_operations = QtWidgets.QWidget()
         self.tab_operations.setObjectName("tab_operations")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.tab_operations)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.h_layout_top_panel_2 = QtWidgets.QHBoxLayout()
+        self.h_layout_top_panel_2.setObjectName("h_layout_top_panel_2")
+        self.btn_settings_2 = QtWidgets.QToolButton(self.tab_operations)
+        self.btn_settings_2.setObjectName("btn_settings_2")
+        self.h_layout_top_panel_2.addWidget(self.btn_settings_2)
+        self.all_accounts_balance_2 = QtWidgets.QLabel(self.tab_operations)
+        self.all_accounts_balance_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.all_accounts_balance_2.setObjectName("all_accounts_balance_2")
+        self.h_layout_top_panel_2.addWidget(self.all_accounts_balance_2)
+        self.btn_search_operation = QtWidgets.QToolButton(self.tab_operations)
+        self.btn_search_operation.setObjectName("btn_search_operation")
+        self.h_layout_top_panel_2.addWidget(self.btn_search_operation)
+        self.verticalLayout_4.addLayout(self.h_layout_top_panel_2)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem2)
+        self.btn_date = QtWidgets.QToolButton(self.tab_operations)
+        self.btn_date.setObjectName("btn_date")
+        self.horizontalLayout_2.addWidget(self.btn_date)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem3)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_2)
+        self.scroll_area_operations = QtWidgets.QScrollArea(self.tab_operations)
+        self.scroll_area_operations.setWidgetResizable(True)
+        self.scroll_area_operations.setObjectName("scroll_area_operations")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 832, 493))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        spacerItem4 = QtWidgets.QSpacerItem(20, 472, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem4)
+        self.scroll_area_operations.setWidget(self.scrollAreaWidgetContents)
+        self.verticalLayout_4.addWidget(self.scroll_area_operations)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem5)
+        self.btn_add_operation = QtWidgets.QToolButton(self.tab_operations)
+        self.btn_add_operation.setObjectName("toolButton_2")
+        self.horizontalLayout.addWidget(self.btn_add_operation)
+        self.verticalLayout_4.addLayout(self.horizontalLayout)
+        self.tab_main_menu.addTab(self.tab_operations, "")
         self.tab_main_menu.addTab(self.tab_operations, "")
         self.tab_overview = QtWidgets.QWidget()
         self.tab_overview.setObjectName("tab_overview")
@@ -125,6 +172,7 @@ class Ui_MainWindow(object):
         self.update_balances()
         self.add_functions_to_buttons()
         self.btn_settings.clicked.connect(self.open_settings_menu)
+        self.btn_add_operation.clicked.connect(self.draw_new_operation)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -134,7 +182,6 @@ class Ui_MainWindow(object):
         ui = Ui_SettingsMenu()
         ui.setupUi(SettingsMenu)
         SettingsMenu.show()
-
 
     def add_new_account(self, acc_object):
         """Метод для прорисовки счёта на главном окне"""
@@ -275,7 +322,7 @@ class Ui_MainWindow(object):
             accounts = json.load(file)['accounts']
 
         if only_last:
-            accounts = (accounts[-1], )
+            accounts = (accounts[-1],)
 
         for btn_data in self.all_accs_buttons:
             for acc in accounts:
@@ -298,6 +345,12 @@ class Ui_MainWindow(object):
         ui.fill_in_with_data(account_btn)
         menu_edit_account.show()
 
+    def draw_new_operation(self):
+        frame_operation = QtWidgets.QFrame(self.scroll_area_operations)
+        ui = Ui_frame_operation()
+        ui.setupUi(frame_operation)
+        self.verticalLayout_5.addWidget(frame_operation)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MoneyTrack"))
@@ -308,6 +361,10 @@ class Ui_MainWindow(object):
         self.all_accs_balance.setText(_translate("MainWindow", "0"))
         self.name_panel_savings.setText(_translate("MainWindow", "СБЕРЕЖЕНИЯ"))
         self.all_savings_balance.setText(_translate("MainWindow", "0"))
+        self.btn_search_operation.setText(_translate("MainWindow", "S"))
+        self.btn_settings_2.setText(_translate("MainWindow", "S"))
+        self.btn_date.setText(_translate("MainWindow", "Date"))
+        self.btn_add_operation.setText(_translate("MainWindow", "+"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_accounts), _translate("MainWindow", "Счета"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_categories),
                                       _translate("MainWindow", "Категории"))
