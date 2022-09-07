@@ -2,6 +2,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 from acc_object import Ui_Form
+from menu_crt_new_acc import Ui_menu_create_account
 from menu_edit_acc import Ui_menu_edit_account
 from menu_settings import Ui_SettingsMenu
 from operation_object import Ui_frame_operation
@@ -191,13 +192,30 @@ class UiMainWindow(object):
         self.add_accounts_to_gui()
         self.update_balances()
         self.add_functions_to_buttons()
+
+        self.btn_crt_new_acc.clicked.connect(self.open_crt_new_acc_menu)
         self.btn_settings.clicked.connect(self.open_settings_menu)
+
         self.btn_add_operation.clicked.connect(self.draw_new_operation)
 
         QtCore.QMetaObject.connectSlotsByName(user_interface)
 
     def setupUi(self, user_interface):
         """Метод для прорисовки основного окна"""
+
+    def open_crt_new_acc_menu(self):
+        menu_create_account = QtWidgets.QDialog()
+        window_crt_new_acc = Ui_menu_create_account(self)
+        window_crt_new_acc.setupUi(menu_create_account)
+        menu_create_account.show()
+
+    def open_edit_acc_menu(self, account_btn):
+        """Открытие меню редактирования счёта"""
+        menu_edit_account = QtWidgets.QDialog()
+        menu_edit_account_ui = Ui_menu_edit_account(self)
+        menu_edit_account_ui.setupUi(menu_edit_account)
+        menu_edit_account_ui.fill_in_with_data(account_btn)
+        menu_edit_account.show()
 
     @staticmethod
     def open_settings_menu():
@@ -288,20 +306,12 @@ class UiMainWindow(object):
 
         for button in self.all_acs_buttons:
             button['btn_acc'].released.connect(
-                lambda btn=button: self.show_edit_acc_menu(btn))
+                lambda btn=button: self.open_edit_acc_menu(btn))
 
     def link_buttons_to_frames(self):
         """Установка связи между кнопками и соответствующими им счетами"""
         for i in range(len(self.frames_acs)):
             self.all_acs_buttons[i]['frame'] = self.frames_acs[i]
-
-    def show_edit_acc_menu(self, account_btn):
-        """Открытие меню редактирования счёта"""
-        menu_edit_account = QtWidgets.QDialog()
-        menu_edit_account_ui = Ui_menu_edit_account(self)
-        menu_edit_account_ui.setupUi(menu_edit_account)
-        menu_edit_account_ui.fill_in_with_data(account_btn)
-        menu_edit_account.show()
 
     def draw_new_operation(self):
         """Прорисовка новой операции"""

@@ -15,7 +15,7 @@ import json
 
 class Ui_menu_create_account(object):
 
-    def __init__(self, parent_window):
+    def __init__(self, parent_window=None):
         """Сохранение главного окна для взаимодействия с ним через окно для создания нового счёта"""
         self.parent_window = parent_window
 
