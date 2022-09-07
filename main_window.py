@@ -2,7 +2,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 from acc_object import Ui_Form
-from menu_crt_new_acc import Ui_menu_create_account
+from menu_crt_new_acc import UiMenuCreateAccount
 from menu_edit_acc import UiMenuEditAccount
 from menu_settings import Ui_SettingsMenu
 from operation_object import Ui_frame_operation
@@ -205,8 +205,7 @@ class UiMainWindow(object):
 
     def open_crt_new_acc_menu(self):
         menu_create_account = QtWidgets.QDialog()
-        window_crt_new_acc = Ui_menu_create_account(self)
-        window_crt_new_acc.setupUi(menu_create_account)
+        UiMenuCreateAccount(menu_create_account, self)
         menu_create_account.show()
 
     def open_edit_acc_menu(self, account_btn):

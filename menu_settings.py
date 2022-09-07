@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_SettingsMenu(object):
+
     def setupUi(self, SettingsMenu):
         """Прорисовка окна настроек"""
         self.SettingsMenu = SettingsMenu
