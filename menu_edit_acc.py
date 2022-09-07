@@ -141,8 +141,8 @@ class Ui_menu_edit_account(object):
         """Заполнение окна данными"""
         self.account_btn = account_btn
         self.account_data = account_btn['acc_data']
-        self.account_index = self.parent_window.all_accs_buttons.index(account_btn)
-        self.acccout_frame = self.parent_window.all_accs_buttons[self.account_index]['frame']
+        self.account_index = self.parent_window.all_acs_buttons.index(account_btn)
+        self.acccout_frame = self.parent_window.all_acs_buttons[self.account_index]['frame']
 
         title = self.account_data['title']
         type_ = self.account_data['type']
@@ -187,8 +187,8 @@ class Ui_menu_edit_account(object):
             json.dump(accounts_data, file, indent=4, ensure_ascii=False)
 
         self.acccout_frame.deleteLater()
-        self.parent_window.frames_accs.remove(self.acccout_frame)
-        del self.parent_window.all_accs_buttons[self.account_index]
+        self.parent_window.frames_acs.remove(self.acccout_frame)
+        del self.parent_window.all_acs_buttons[self.account_index]
 
     def deletion_request(self):
         """Окно для подтверждение удаления"""

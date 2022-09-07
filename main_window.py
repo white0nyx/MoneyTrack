@@ -40,23 +40,23 @@ class UiMainWindow(object):
         self.btn_crt_new_acc.setObjectName("btn_crt_new_acc")
         self.h_layout_top_panel.addWidget(self.btn_crt_new_acc)
         self.verticalLayout_3.addLayout(self.h_layout_top_panel)
-        self.frame_panel_accs = QtWidgets.QFrame(self.tab_accounts)
-        self.frame_panel_accs.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_panel_accs.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_panel_accs.setObjectName("frame_panel_accs")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_panel_accs)
+        self.frame_panel_acs = QtWidgets.QFrame(self.tab_accounts)
+        self.frame_panel_acs.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_panel_acs.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_panel_acs.setObjectName("frame_panel_acs")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_panel_acs)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.name_panel_accs = QtWidgets.QLabel(self.frame_panel_accs)
-        self.name_panel_accs.setObjectName("name_panel_accs")
-        self.horizontalLayout_3.addWidget(self.name_panel_accs)
-        self.all_accs_balance = QtWidgets.QLabel(self.frame_panel_accs)
-        self.all_accs_balance.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
-        self.all_accs_balance.setObjectName("all_accs_balance")
-        self.horizontalLayout_3.addWidget(self.all_accs_balance)
+        self.name_panel_acs = QtWidgets.QLabel(self.frame_panel_acs)
+        self.name_panel_acs.setObjectName("name_panel_acs")
+        self.horizontalLayout_3.addWidget(self.name_panel_acs)
+        self.all_acs_balance = QtWidgets.QLabel(self.frame_panel_acs)
+        self.all_acs_balance.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignTrailing | QtCore.Qt.AlignVCenter)
+        self.all_acs_balance.setObjectName("all_acs_balance")
+        self.horizontalLayout_3.addWidget(self.all_acs_balance)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
-        self.scrollArea = QtWidgets.QScrollArea(self.frame_panel_accs)
+        self.scrollArea = QtWidgets.QScrollArea(self.frame_panel_acs)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
@@ -77,7 +77,7 @@ class UiMainWindow(object):
         self.verticalLayout_13.addItem(spacer_item0)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_3)
         self.verticalLayout_2.addWidget(self.scrollArea)
-        self.verticalLayout_3.addWidget(self.frame_panel_accs)
+        self.verticalLayout_3.addWidget(self.frame_panel_acs)
         self.frame_panel_savings = QtWidgets.QFrame(self.tab_accounts)
         self.frame_panel_savings.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_panel_savings.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -182,11 +182,11 @@ class UiMainWindow(object):
         self.gridLayout.addWidget(self.tab_main_menu, 0, 0, 1, 1)
         user_interface.setCentralWidget(self.layout_main_window)
 
-        self.retranslateUi(user_interface)
+        self.set_all_text(user_interface)
         self.tab_main_menu.setCurrentIndex(0)
 
-        self.all_accs_buttons = []
-        self.frames_accs = []
+        self.all_acs_buttons = []
+        self.frames_acs = []
 
         self.add_accounts_to_gui()
         self.update_balances()
@@ -223,8 +223,8 @@ class UiMainWindow(object):
             ui.setupUi(account_object)
             self.verticalLayout_15.addWidget(account_object)
 
-        self.all_accs_buttons.append({'btn_acc': ui.btn_more_info, 'title': acc_object['title']})
-        self.frames_accs.append(ui.frame)
+        self.all_acs_buttons.append({'btn_acc': ui.btn_more_info, 'title': acc_object['title']})
+        self.frames_acs.append(ui.frame)
         self.link_buttons_to_frames()
 
     def add_accounts_to_gui(self, only_last=False):
@@ -255,16 +255,16 @@ class UiMainWindow(object):
             if account['add_to_all_balance']:
                 all_balance += account['balance']
 
-        self.all_accs_balance.setText(f'{self.remove_extra_zeros(round(all_accounts_balance, 2))} ₽')
+        self.all_acs_balance.setText(f'{self.remove_extra_zeros(round(all_accounts_balance, 2))} ₽')
         self.all_savings_balance.setText(f'{self.remove_extra_zeros(round(all_savings_balance, 2))} ₽')
         self.all_accounts_balance.setText(f'{self.remove_extra_zeros(round(all_balance, 2))} ₽')
 
     def update_accounts_gui(self):
         """Перепрорисовка всех счетов на главном экране"""
-        for account_frame in self.frames_accs:
+        for account_frame in self.frames_acs:
             account_frame.deleteLater()
-        self.frames_accs = []
-        self.all_accs_buttons = []
+        self.frames_acs = []
+        self.all_acs_buttons = []
         self.add_accounts_to_gui()
 
     @staticmethod
@@ -281,19 +281,19 @@ class UiMainWindow(object):
         if only_last:
             accounts = (accounts[-1],)
 
-        for btn_data in self.all_accs_buttons:
+        for btn_data in self.all_acs_buttons:
             for acc in accounts:
                 if btn_data['title'] == acc['title']:
                     btn_data.update({'acc_data': acc})
 
-        for button in self.all_accs_buttons:
+        for button in self.all_acs_buttons:
             button['btn_acc'].released.connect(
                 lambda btn=button: self.show_edit_acc_menu(btn))
 
     def link_buttons_to_frames(self):
         """Установка связи между кнопками и соответствующими им счетами"""
-        for i in range(len(self.frames_accs)):
-            self.all_accs_buttons[i]['frame'] = self.frames_accs[i]
+        for i in range(len(self.frames_acs)):
+            self.all_acs_buttons[i]['frame'] = self.frames_acs[i]
 
     def show_edit_acc_menu(self, account_btn):
         """Открытие меню редактирования счёта"""
@@ -310,14 +310,14 @@ class UiMainWindow(object):
         frame_operation_ui.setupUi(frame_operation)
         self.verticalLayout_7.addWidget(frame_operation)
 
-    def retranslateUi(self, window):
+    def set_all_text(self, window):
         _translate = QtCore.QCoreApplication.translate
         window.setWindowTitle(_translate("MainWindow", "MoneyTrack"))
         self.btn_settings.setText(_translate("MainWindow", "S"))
         self.all_accounts_balance.setText(_translate("MainWindow", "0"))
         self.btn_crt_new_acc.setText(_translate("MainWindow", "+"))
-        self.name_panel_accs.setText(_translate("MainWindow", "СЧЕТА"))
-        self.all_accs_balance.setText(_translate("MainWindow", "0"))
+        self.name_panel_acs.setText(_translate("MainWindow", "СЧЕТА"))
+        self.all_acs_balance.setText(_translate("MainWindow", "0"))
         self.name_panel_savings.setText(_translate("MainWindow", "СБЕРЕЖЕНИЯ"))
         self.all_savings_balance.setText(_translate("MainWindow", "0"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_accounts), _translate("MainWindow", "Счета"))
