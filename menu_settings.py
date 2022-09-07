@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_SettingsMenu(object):
     def setupUi(self, SettingsMenu):
+        """Прорисовка окна настроек"""
         self.SettingsMenu = SettingsMenu
         SettingsMenu.setObjectName("SettingsMenu")
         SettingsMenu.resize(601, 583)
@@ -342,6 +343,7 @@ class Ui_SettingsMenu(object):
         QtCore.QMetaObject.connectSlotsByName(SettingsMenu)
 
     def close_settings_mmenu(self):
+        """Закрытие окна"""
         self.SettingsMenu.close()
 
     def retranslateUi(self, SettingsMenu):

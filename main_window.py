@@ -206,6 +206,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def open_settings_menu(self):
+        """Открытие меню настроек"""
         global SettingsMenu
         SettingsMenu = QtWidgets.QMainWindow()
         ui = Ui_SettingsMenu()
@@ -213,10 +214,9 @@ class Ui_MainWindow(object):
         SettingsMenu.show()
 
     def add_new_account(self, acc_object):
-        global ui
-        print(acc_object)
         """Метод прорисовывает счета на главном окне
         и связывает кнопки счетов с необходимыми функциями"""
+        global ui
         if acc_object['type'] == 'Обычный':
             account_object = QtWidgets.QWidget()
             ui = Ui_Form(acc_object)
@@ -266,6 +266,7 @@ class Ui_MainWindow(object):
         self.all_accounts_balance.setText(f'{self.remove_extra_zeros(round(all_balance, 2))} ₽')
 
     def update_accounts_gui(self):
+        """Перепрорисовка всех счетов на главном экране"""
         for account_frame in self.frames_accs:
             account_frame.deleteLater()
         self.frames_accs = []
@@ -274,9 +275,11 @@ class Ui_MainWindow(object):
 
     @staticmethod
     def remove_extra_zeros(number):
+        """Удаление незначащих нулей из баланса"""
         return int(number) if int(number) - number == 0.0 else number
 
     def add_functions_to_buttons(self, only_last=False):
+        """Присвоение кнопке/кнопкам функций"""
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts = json.load(file)['accounts']
@@ -294,10 +297,12 @@ class Ui_MainWindow(object):
                 lambda btn=button: self.show_edit_acc_menu(btn))
 
     def link_buttons_to_frames(self):
+        """Установка связи между кнопками и соответствующими им счетами"""
         for i in range(len(self.frames_accs)):
             self.all_accs_buttons[i]['frame'] = self.frames_accs[i]
 
     def show_edit_acc_menu(self, account_btn):
+        """Открытие меню редактирования счёта"""
         global menu_edit_account
         menu_edit_account = QtWidgets.QDialog()
         ui = Ui_menu_edit_account(self)
@@ -306,6 +311,7 @@ class Ui_MainWindow(object):
         menu_edit_account.show()
 
     def draw_new_operation(self):
+        """Прорисовка новой операции"""
         frame_operation = QtWidgets.QFrame(self.scroll_area_operations)
         ui = Ui_frame_operation()
         ui.setupUi(frame_operation)

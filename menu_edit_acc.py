@@ -17,9 +17,11 @@ from PyQt5.QtWidgets import QMessageBox
 class Ui_menu_edit_account(object):
 
     def __init__(self, parent_window):
+        """Сохранение главного окна для взаимодействия с ним через окно для создания нового счёта"""
         self.parent_window = parent_window
 
     def setupUi(self, menu_edit_account):
+        """Прорисовка меню редактирования счёта"""
         self.menu_edit_account = menu_edit_account
         menu_edit_account.setObjectName("menu_edit_account")
         menu_edit_account.setEnabled(True)
@@ -136,6 +138,7 @@ class Ui_menu_edit_account(object):
         QtCore.QMetaObject.connectSlotsByName(menu_edit_account)
 
     def fill_in_with_data(self, account_btn):
+        """Заполнение окна данными"""
         self.account_btn = account_btn
         self.account_data = account_btn['acc_data']
         self.account_index = self.parent_window.all_accs_buttons.index(account_btn)
@@ -166,12 +169,13 @@ class Ui_menu_edit_account(object):
         self.add_functions_to_buttons()
 
     def add_functions_to_buttons(self):
+        """Добавление функций кнопкам"""
         self.btn_cancel.clicked.connect(lambda: self.menu_edit_account.close())
         self.btn_delete.clicked.connect(lambda: self.deletion_request())
         self.btn_accept.clicked.connect(lambda: self.accept_changes())
 
     def delete_account_data(self):
-
+        """Удаление данных о счёте"""
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
             accounts_data = json.load(file)
 
@@ -187,7 +191,7 @@ class Ui_menu_edit_account(object):
         del self.parent_window.all_accs_buttons[self.account_index]
 
     def deletion_request(self):
-
+        """Окно для подтверждение удаления"""
         delete_ask = QMessageBox()
         delete_ask.setWindowTitle('Подтверждение удаления')
         delete_ask.setText(f'Вы уверены, что хотите удалить счёт {self.account_data["title"]}?')
@@ -199,6 +203,7 @@ class Ui_menu_edit_account(object):
         delete_ask.exec_()
 
     def full_delete_account(self, btn):
+        """Полное удаление счёта"""
         if btn.text() == 'Удалить':
             self.delete_account_data()
             self.menu_edit_account.close()
