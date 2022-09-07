@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 from acc_object import Ui_Form
 from menu_crt_new_acc import Ui_menu_create_account
-from menu_edit_acc import Ui_menu_edit_account
+from menu_edit_acc import UiMenuEditAccount
 from menu_settings import Ui_SettingsMenu
 from operation_object import Ui_frame_operation
 
@@ -212,9 +212,7 @@ class UiMainWindow(object):
     def open_edit_acc_menu(self, account_btn):
         """Открытие меню редактирования счёта"""
         menu_edit_account = QtWidgets.QDialog()
-        menu_edit_account_ui = Ui_menu_edit_account(self)
-        menu_edit_account_ui.setupUi(menu_edit_account)
-        menu_edit_account_ui.fill_in_with_data(account_btn)
+        UiMenuEditAccount(self, account_btn, menu_edit_account)
         menu_edit_account.show()
 
     @staticmethod
