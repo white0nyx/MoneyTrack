@@ -213,7 +213,6 @@ class Ui_menu_edit_account(object):
         accounts.insert(
             self.account_index,
             {
-                'id': accounts_data['new_id'],
                 'title': self.line_title.text(),
                 'type': self.type_selection.currentText(),
                 'currency_full': self.currency_selection.currentText(),

@@ -10,8 +10,7 @@ if not os.path.exists('app_data/all_accounts.json'):
     with open('app_data/all_accounts.json', 'w', encoding='utf-8') as file:
         json.dump({
             'accounts': [],
-            'new_id': 1
-        }, file, indent=4, ensure_ascii=False)
+            }, file, indent=4, ensure_ascii=False)
 
 app = QtWidgets.QApplication(sys.argv)
 app.setStyle('Fusion')
