@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from main_window import Ui_MainWindow
+from main_window import UiMainWindow
 from menu_crt_new_acc import Ui_menu_create_account
 
 import os.path
@@ -16,7 +16,7 @@ app = QtWidgets.QApplication(sys.argv)
 app.setStyle('Fusion')
 
 MainWindow = QtWidgets.QMainWindow()
-ui = Ui_MainWindow()
+ui = UiMainWindow(MainWindow)
 ui.setupUi(MainWindow)
 MainWindow.show()
 
