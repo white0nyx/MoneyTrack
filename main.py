@@ -16,7 +16,6 @@ app.setStyle('Fusion')
 
 MainWindow = QtWidgets.QMainWindow()
 ui = UiMainWindow(MainWindow)
-ui.setupUi(MainWindow)
 MainWindow.show()
 
 sys.exit(app.exec_())

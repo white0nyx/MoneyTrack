@@ -1,3 +1,15 @@
 {
-    "accounts": []
+    "accounts": [
+        {
+            "title": "333",
+            "type": "Накопительный",
+            "currency_full": "Российский рубль ₽",
+            "currency_index": 0,
+            "currency_short": "₽",
+            "description": "333",
+            "balance": 333.0,
+            "add_to_all_balance": true,
+            "hide": false
+        }
+    ]
 }

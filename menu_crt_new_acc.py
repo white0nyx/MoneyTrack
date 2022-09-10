@@ -149,6 +149,7 @@ class UiMenuCreateAccount(object):
         self.menu_create_account.close()
 
     def set_all_text(self, menu_crt_account):
+        """Установка всего текста"""
         _translate = QtCore.QCoreApplication.translate
         menu_crt_account.setWindowTitle(_translate("menu_create_account", "Новый счёт"))
         self.menu_title_account.setText(_translate("menu_create_account", "Счёт"))
@@ -166,13 +167,3 @@ class UiMenuCreateAccount(object):
         self.check_add_in_all_balance.setText(_translate("menu_create_account", "Учитывать в общем балансе"))
         self.btn_add.setText(_translate("menu_create_account", "Добавить"))
         self.btn_cancel.setText(_translate("menu_create_account", "Отменить"))
-
-
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    menu_create_account = QtWidgets.QDialog()
-    ui = UiMenuCreateAccount()
-    menu_create_account.show()
-    sys.exit(app.exec_())

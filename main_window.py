@@ -4,13 +4,14 @@ import json
 from acc_object import Ui_Form
 from menu_crt_new_acc import UiMenuCreateAccount
 from menu_edit_acc import UiMenuEditAccount
-from menu_settings import Ui_SettingsMenu
-from operation_object import Ui_frame_operation
+from menu_settings import UiSettingsMenu
+from operation_object import UiFrameOperation
 
 
 class UiMainWindow(object):
 
     def __init__(self, user_interface):
+        """Инициализация главного окна"""
         user_interface.setObjectName("MainWindow")
         user_interface.resize(900, 600)
         icon = QtGui.QIcon()
@@ -200,10 +201,8 @@ class UiMainWindow(object):
 
         QtCore.QMetaObject.connectSlotsByName(user_interface)
 
-    def setupUi(self, user_interface):
-        """Метод для прорисовки основного окна"""
-
     def open_crt_new_acc_menu(self):
+        """Открытие меню создания нового счёта"""
         menu_create_account = QtWidgets.QDialog()
         UiMenuCreateAccount(menu_create_account, self)
         menu_create_account.show()
@@ -218,25 +217,24 @@ class UiMainWindow(object):
     def open_settings_menu():
         """Открытие меню настроек"""
         settings_menu = QtWidgets.QMainWindow()
-        settings_ui = Ui_SettingsMenu()
-        settings_ui.setupUi(settings_menu)
+        UiSettingsMenu(settings_menu)
         settings_menu.show()
 
     def add_new_account(self, acc_object):
         """Прорисовка счета на главном окне
         и связывание кнопки счетов с необходимыми функциями"""
-        global ui
-        if acc_object['type'] == 'Обычный':
-            account_object = QtWidgets.QWidget()
-            ui = Ui_Form(acc_object)
-            ui.setupUi(account_object)
-            self.verticalLayout_16.addWidget(account_object)
 
-        elif acc_object['type'] == 'Накопительный':
+        if acc_object['type'] == 'Накопительный':
             account_object = QtWidgets.QWidget()
             ui = Ui_Form(acc_object)
             ui.setupUi(account_object)
             self.verticalLayout_15.addWidget(account_object)
+
+        else:
+            account_object = QtWidgets.QWidget()
+            ui = Ui_Form(acc_object)
+            ui.setupUi(account_object)
+            self.verticalLayout_16.addWidget(account_object)
 
         self.all_acs_buttons.append({'btn_acc': ui.btn_more_info, 'title': acc_object['title']})
         self.frames_acs.append(ui.frame)
@@ -313,11 +311,11 @@ class UiMainWindow(object):
     def draw_new_operation(self):
         """Прорисовка новой операции"""
         frame_operation = QtWidgets.QFrame(self.scroll_area_operations)
-        frame_operation_ui = Ui_frame_operation()
-        frame_operation_ui.setupUi(frame_operation)
+        UiFrameOperation(frame_operation)
         self.verticalLayout_7.addWidget(frame_operation)
 
     def set_all_text(self, window):
+        """Установка всего текста"""
         _translate = QtCore.QCoreApplication.translate
         window.setWindowTitle(_translate("MainWindow", "MoneyTrack"))
         self.btn_settings.setText(_translate("MainWindow", "S"))
@@ -338,14 +336,3 @@ class UiMainWindow(object):
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_operations),
                                       _translate("MainWindow", "Операции"))
         self.tab_main_menu.setTabText(self.tab_main_menu.indexOf(self.tab_overview), _translate("MainWindow", "Обзор"))
-
-
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = UiMainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

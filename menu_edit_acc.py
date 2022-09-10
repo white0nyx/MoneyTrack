@@ -197,6 +197,7 @@ class UiMenuEditAccount(object):
             self.parent_window.update_balances()
 
     def accept_changes(self):
+        """Сохранение новых данных счёта"""
         self.delete_account_data()
 
         with open('app_data/all_accounts.json', 'r', encoding='utf-8') as file:
@@ -226,6 +227,7 @@ class UiMenuEditAccount(object):
         self.menu_edit_account.close()
 
     def set_all_text(self, edit_account_menu):
+        """Установка всего текста"""
         _translate = QtCore.QCoreApplication.translate
         edit_account_menu.setWindowTitle(_translate("menu_edit_account", "Редактирование счёта"))
         self.menu_title_account.setText(_translate("menu_edit_account", "Счёт"))
@@ -245,13 +247,3 @@ class UiMenuEditAccount(object):
         self.btn_delete.setText(_translate("menu_edit_account", "Удалить счёт"))
         self.btn_accept.setText(_translate("menu_edit_account", "Применить"))
         self.btn_cancel.setText(_translate("menu_edit_account", "Отменить"))
-
-
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    menu_edit_account = QtWidgets.QDialog()
-    ui = UiMenuEditAccount()
-    menu_edit_account.show()
-    sys.exit(app.exec_())
